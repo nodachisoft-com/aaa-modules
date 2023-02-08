@@ -4,7 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/lib/dev/gtest/include"
+                "${workspaceFolder}/lib/dev/gtest/include",
+                "${workspaceFolder}/lib/ndc-cpp11-libs/publish/includes"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
