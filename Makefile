@@ -57,7 +57,7 @@ $(RUN_TMP_ENTRY_EXEC_FILE): $(SOURCES)
 	$(CC) $(SOURCES) $(TMP_ENTRY_SOURCES) -o $(RUN_TMP_ENTRY_EXEC_FILE) $(DEPENDENCIES_INCDIR) $(DEPENDENCIES_LIBDIR) $(DEPENDENCIES_LIBS)
 
 # テスト用ソースコードのコンパイル＆実行
-all: clean $(RUN_TEST_EXEC_FILE) runtest
+test: clean $(RUN_TEST_EXEC_FILE) runtest
 
 # 一時ファイル、実行ファイルを削除
 clean:
