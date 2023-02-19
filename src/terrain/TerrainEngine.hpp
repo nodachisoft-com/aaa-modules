@@ -2,8 +2,12 @@
 #include <iostream>
 #include <ndclibs.hpp>
 
-class TerrainEngine
+namespace a3c
 {
-public:
-  TerrainEngine();
-};
+  class TerrainEngine
+  {
+  public:
+    TerrainEngine();
+    initialize();
+  };
+}
