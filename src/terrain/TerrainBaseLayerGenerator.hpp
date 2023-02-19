@@ -3,6 +3,8 @@
 #include <ndclibs.hpp>
 #include "TerrainBaseConfig.hpp"
 
+using namespace nl;
+
 namespace a3c
 {
   class TerrainBaseLayerGenerator
@@ -10,11 +12,21 @@ namespace a3c
   private:
     TerrainBaseConfig conf;
 
-    /// @brief Biome 生成。設定値は setConfig で上書きされる
-    nl::NdcVoronoi biom{0, 4, 64, 64};
+    /// @brief Biome
+    NdcVoronoi biom;
+
+    /// @brief Terrain layer1
+    PerlinNoise1234 layer1;
+
+    /// @brief Terrain layer2
+    PerlinNoise1234 layer2;
+
+    /// @brief Strategy 計算用の大域マップデータ（HF）を生成する
+    Memory2d<float> strategyMapHF;
 
   public:
     TerrainBaseLayerGenerator();
+    ~TerrainBaseLayerGenerator();
     void setConfig(TerrainBaseConfig conf);
 
     // 基本的 Terrain, History, Ruin, Organization, Map DestructionArea 作成

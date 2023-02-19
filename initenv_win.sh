@@ -16,6 +16,9 @@ build_ndc_cpp11_libs() {
   cd ../../
 }
 
+
+
+
 # ========================================
 # Windows + MinGW + gcc 環境で gtest を実行可能な環境を構築する
 # 前提: git, mingw, cmake, make(mingw32-make) を choco でインストールしておくこと
@@ -42,4 +45,6 @@ build_gtest() {
   rm -rf tmp/*
 }
 
-build_gtest
+# build_gtest
+
+build_ndc_cpp11_libs
