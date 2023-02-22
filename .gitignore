@@ -2,5 +2,6 @@ debug/
 publish/
 lib/dev/gtest/lib/
 lib/dev/gtest/include/
+lib/ndc-cpp11-libs/*
 tmp/compile/src/*
 tmp/compile/test/*
