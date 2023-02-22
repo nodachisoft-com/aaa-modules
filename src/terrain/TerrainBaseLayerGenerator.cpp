@@ -17,6 +17,7 @@ void TerrainBaseLayerGenerator::setConfig(TerrainBaseConfig _conf)
   biom.init(_conf.Seed, (unsigned char)_conf.NaturalBiomeTypes, 32, 32);
   layer1.init(_conf.Seed);
   layer2.init(_conf.Seed + 66);
+  layer3.init(_conf.Seed + 100);
 }
 
 void TerrainBaseLayerGenerator::generateBaseTerrain()
@@ -28,27 +29,31 @@ void TerrainBaseLayerGenerator::generateBaseTerrain()
   strategyMapHF.init(width, height, 0.0f);
   // レイヤー1
   {
-    int noisePointX = 4;
-    int noisePointY = 4;
+    int layer1noisePointX = 4, layer1noisePointY = 4;
+    int layer2noisePointX = 8, layer2noisePointY = 8;
+    int layer3noisePointX = 12, layer3noisePointY = 12;
     for (int v = 0; v < height; v++)
     {
       for (int u = 0; u < width; u++)
       {
-        float res = layer1.pnoise2((u * noisePointX) / (float)width, (v * noisePointY) / (float)height, noisePointX, noisePointY, 255.0f);
-        strategyMapHF.setWithIgnoreOutOfRangeData(u, v, res);
-      }
-    }
-  }
+        float res1 = layer1.pnoise2(
+            (u * layer1noisePointX) / (float)width,
+            (v * layer1noisePointY) / (float)height,
+            layer1noisePointX, layer1noisePointY, 255.0f);
 
-  // レイヤー2
-  {
-    int noisePointX = 8;
-    int noisePointY = 8;
-    for (int v = 0; v < height; v++)
-    {
-      for (int u = 0; u < width; u++)
-      {
-        float res = layer2.pnoise2((u * noisePointX) / (float)width, (v * noisePointY) / (float)height, noisePointX, noisePointY, 255.0f);
+        float res2 = layer2.pnoise2(
+            (u * layer2noisePointX) / (float)width,
+            (v * layer2noisePointY) / (float)height,
+            layer2noisePointX, layer2noisePointY, 255.0f);
+
+        float res3 = layer3.pnoise2(
+            (u * layer3noisePointX) / (float)width,
+            (v * layer3noisePointY) / (float)height,
+            layer3noisePointX, layer3noisePointY, 255.0f);
+        float res = res1 * 0.5 + res2 * 0.3 + res3 * 0.2;
+        // float res = res1 * 0.7 + res2 * 0.3;
+        // float res = res1;
+
         strategyMapHF.setWithIgnoreOutOfRangeData(u, v, res);
       }
     }
@@ -56,6 +61,7 @@ void TerrainBaseLayerGenerator::generateBaseTerrain()
 
   // デバッグ画像出力
   // DEBUG 用の画像出力
+
   BitmapImage image(width, height);
   for (int v = 0; v < height; v++)
   {
@@ -67,5 +73,6 @@ void TerrainBaseLayerGenerator::generateBaseTerrain()
       image.set(u, v, color);
     }
   }
-  image.WriteBmp("0000_test.bmp");
+  image.WriteBmp("./debug/0000_test.bmp");
+  std::cout << "Bitmap Released!" << std::endl;
 }

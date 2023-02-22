@@ -9,6 +9,7 @@ using namespace a3c;
 
 TEST(TerrainBaseLayerGenerator, initialize_case001)
 {
+
   TerrainBaseConfig conf;
 
   conf.Seed = 100;
@@ -27,6 +28,7 @@ TEST(TerrainBaseLayerGenerator, initialize_case001)
 
   log.infoLog("terrainGenerator.generateBaseTerrain finish");
 
+  // std::cout << "Memory Released!" << std::endl;
   // 計算結果確認
   // EXPECT_EQ(0xed82cd11, result);
   // EXPECT_EQ(0xed82cd11, crc.getHash());

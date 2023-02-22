@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ndclibs.hpp>
+#include "../../src/a3commonlib.hpp"
 
 using namespace nl;
 using namespace a3c;

@@ -21,6 +21,9 @@ namespace a3c
     /// @brief Terrain layer2
     PerlinNoise1234 layer2;
 
+    /// @brief Terrain layer3
+    PerlinNoise1234 layer3;
+
     /// @brief Strategy 計算用の大域マップデータ（HF）を生成する
     Memory2d<float> strategyMapHF;
 
