@@ -1,0 +1,20 @@
+{
+  "configurations": [
+    {
+      "name": "Windows",
+      "includePath": [
+        "C:\\ProgramData\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\include\\c++\\12.2.0",
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/lib/dev/gtest/include",
+        "${workspaceFolder}/lib/ndc-cpp11-libs/publish/includes"
+      ],
+      "defines": [],
+      "compilerPath": "C:\\ProgramData\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\bin\\g++.exe",
+      "cStandard": "c17",
+      "cppStandard": "c++14",
+      "intelliSenseMode": "linux-clang-x64",
+      "configurationProvider": "ms-vscode.makefile-tools"
+    }
+  ],
+  "version": 4
+}

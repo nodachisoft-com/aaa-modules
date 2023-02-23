@@ -1,15 +1,14 @@
 {
     "configurations": [
         {
-            "name": "Windows",
+            "name": "Linux",
             "includePath": [
-                "C:\\ProgramData\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\include\\c++\\12.2.0",
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/lib/dev/gtest/include",
                 "${workspaceFolder}/lib/ndc-cpp11-libs/publish/includes"
             ],
             "defines": [],
-            "compilerPath": "C:\\ProgramData\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\bin\\g++.exe",
+            "compilerPath": "/usr/bin/clang",
             "cStandard": "c17",
             "cppStandard": "c++14",
             "intelliSenseMode": "linux-clang-x64",

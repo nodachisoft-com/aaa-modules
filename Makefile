@@ -82,6 +82,8 @@ TEST_SOURCES = $(foreach dir, $(TEST_SRCDIRS), $(wildcard $(dir)/test_*.cpp))
 TEST_OBJSRCS = $(TEST_SOURCES:$(TEST_SRCROOT)/%=%)
 TEST_OBJECTS = $(addprefix $(TEST_OBJROOT)/, $(TEST_OBJSRCS:.cpp=.o))
 
+TEST_DEPENDS = $(TEST_OBJECTS:.o=.d)
+
 # ===============================================
 # 本番ライブラリ出力用 ビルド設定
 # ライブラリを生成し、リリース用 include ファイルを publish にコピーする
@@ -170,3 +172,4 @@ clean: clean_publish clean_test clean_objects
 	@echo -e ${MSG_B}Clear All Test Files, Objects Files, Temp Files, DONE.${MSG_E}
 
 -include $(DEPENDS)
+-include $(TEST_DEPENDS)

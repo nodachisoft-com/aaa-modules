@@ -2,5 +2,5 @@
 #include <string>
 #include <ndclibs.hpp>
 
-#include "testutil.hpp"
-#include "const.hpp"
+#include "test_util.hpp"
+#include "test_const.hpp"
