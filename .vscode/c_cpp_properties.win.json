@@ -6,7 +6,7 @@
         "C:\\ProgramData\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\include\\c++\\12.2.0",
         "${workspaceFolder}/**",
         "${workspaceFolder}/lib/dev/gtest/include",
-        "${workspaceFolder}/lib/ndc-cpp11-libs/publish/includes"
+        "${workspaceFolder}/lib/ndc-cpp11-libs/includes"
       ],
       "defines": [],
       "compilerPath": "C:\\ProgramData\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\bin\\g++.exe",

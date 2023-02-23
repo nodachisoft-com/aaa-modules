@@ -4,7 +4,7 @@
 # 前提コマンド：unzip, bash, Linux基本コマンド類, gcc, git
 # ========================================================
 build_ndc_cpp11_libs() {
-  cd ./lib/
+  cd ./tmp/
 
   # ndc-cpp11-libs のビルドを行う
   echo "[INFO] BUILD NDC-CPP11-LIBS BEGINS..."
@@ -14,6 +14,12 @@ build_ndc_cpp11_libs() {
   sh build.sh
   echo "[INFO] BUILD NDC-CPP11-LIBS COMPLETED!"
   cd ../../
+  pwd
+
+  mkdir ./lib/ndc-cpp11-libs
+  cp -r ./tmp/ndc-cpp11-libs/publish/* ./lib/ndc-cpp11-libs
+  rm -rf ./tmp/ndc-cpp11-libs
+  echo "[INFO] NDC-CPP11-LIBS COPIED TO ./lib/ndc-cpp11-libs/"
 }
 
 

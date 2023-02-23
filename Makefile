@@ -29,8 +29,8 @@ TEST_CLAGS = -pthread
 TEST_CLAGS = -std=c++17
 
 # src 用 依存関係ライブラリパス
-DEPENDENCIES_INCDIR = -I./lib/ndc-cpp11-libs/publish/includes
-DEPENDENCIES_LIBDIR  = -L./lib/ndc-cpp11-libs/publish/libs
+DEPENDENCIES_INCDIR = -I./lib/ndc-cpp11-libs/includes
+DEPENDENCIES_LIBDIR  = -L./lib/ndc-cpp11-libs/libs
 DEPENDENCIES_LIBS = -lNdclibs
 
 # test src 用 依存関係ライブラリパス
