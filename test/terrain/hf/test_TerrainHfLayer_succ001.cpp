@@ -15,53 +15,39 @@ TEST(TerrainHfLayer, initialize_case001)
   EXPECT_EQ(result, true);
 }
 
-// 縦ｘ横で 1024x1024 サイズのループ地形(HF)を TerrainHfLayer から生成する
+// 縦ｘ横で 800x600 サイズのループ地形(HF)を TerrainHfLayer から生成する
+// Layer の一部をカメラで拡大して、指定の部分を 800x600 解像度でレンダリングする
 TEST(TerrainHfLayer, getHeight_case001)
 {
-  std::string path1 = TESTTMP_DIR + "TerrainHfLayer_getHeight_case001_1.bmp";
-  std::string path2 = TESTTMP_DIR + "TerrainHfLayer_getHeight_case001_2.bmp";
-  std::string path3 = TESTTMP_DIR + "TerrainHfLayer_getHeight_case001_3.bmp";
+  std::string pathPrefix = TESTTMP_DIR + "TerrainHfLayer_getHeight_case001_";
 
-  float width = 800;
-  float height = 600;
-  Memory2d<float> strategyMapHF(width, height, 0.0f);
+  float mapSizeX = 800;
+  float mapSizeY = 600;
+  float imgWidth = 400;
+  float imgHeight = 300;
+  Memory2d<float> strategyMapHF(imgWidth, imgHeight, 0.0f);
 
-  Rectangle2d area1({0, 0}, {width, height});
+  Rectangle2d area1({0, 0}, {mapSizeX, mapSizeY}); // レンダリング範囲を指定
   TerrainHfLayer layer;
-  layer.init(TerrainHfLayer::MODE_PPN, 101, area1, {width, height}, {8, 6});
-  for (int v = 0; v < height; v++)
-  {
-    for (int u = 0; u < width; u++)
-    {
-      float h = layer.getHeight(u / width, v / height);
-      strategyMapHF.setWithIgnoreOutOfRangeData(u, v, h);
-    }
-  }
-  TestUtil::drawHfColorful(&strategyMapHF, path1);
+  // TODO : noize 濃度を 0.0-1.0 で指定可能とすること
+  layer.init(TerrainHfLayer::MODE_PPN, 101, area1, {mapSizeX, mapSizeY}, {8, 6});
 
-  // 同じマップの一部(80%部分)を拡大する(中央部分)
-  Rectangle2d area2({width * 0.1f, height * 0.1f}, {width * 0.9f, height * 0.9f});
-  layer.setWindowArea(area2);
-  for (int v = 0; v < height; v++)
+  for (int i = 0; i < 7; i++)
   {
-    for (int u = 0; u < width; u++)
-    {
-      float h = layer.getHeight(u / width, v / height);
-      strategyMapHF.setWithIgnoreOutOfRangeData(u, v, h);
-    }
-  }
-  TestUtil::drawHfColorful(&strategyMapHF, path2);
+    float diff = 0.0485f;
+    Rectangle2d viewWindow(
+        {imgWidth * diff * i, imgHeight * diff * i},
+        {imgWidth * (1.0f - diff * i), imgHeight * (1.0f - diff * i)});
+    layer.setWindowArea(viewWindow);
 
-  // 同じマップの一部(60%部分)を拡大する(中央部分)
-  Rectangle2d area3({width * 0.2f, height * 0.2f}, {width * 0.8f, height * 0.8f});
-  layer.setWindowArea(area3);
-  for (int v = 0; v < height; v++)
-  {
-    for (int u = 0; u < width; u++)
+    for (int v = 0; v < imgHeight; v++)
     {
-      float h = layer.getHeight(u / width, v / height);
-      strategyMapHF.setWithIgnoreOutOfRangeData(u, v, h);
+      for (int u = 0; u < imgWidth; u++)
+      {
+        float h = layer.getHeight(u / imgWidth, v / imgHeight);
+        strategyMapHF.setWithIgnoreOutOfRangeData(u, v, h);
+      }
     }
+    TestUtil::drawHfColorful(&strategyMapHF, pathPrefix + std::to_string(i) + ".bmp");
   }
-  TestUtil::drawHfColorful(&strategyMapHF, path3);
 }
