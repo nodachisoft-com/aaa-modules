@@ -105,7 +105,10 @@
         "compare": "cpp",
         "concepts": "cpp",
         "numbers": "cpp",
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "any": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp"
     },
     // 改行コードの規定値
     "files.eol": "\n",
