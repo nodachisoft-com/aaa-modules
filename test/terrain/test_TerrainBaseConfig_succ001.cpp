@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
-#include <test_common/index.hpp>
 #include <ndclibs.hpp>
 #include <iostream>
 #include "../../src/a3commonlib.hpp"
+#include "../test_common/index.hpp"
 
 using namespace nl;
 using namespace a3c;

@@ -120,7 +120,7 @@ TestTargetPre:
 
 # テスト用オブジェクト、メインモジュール用オブジェクトをリンクして UT 用 EXE を出力する
 .PHONY: TestTargetMain
-TestTargetMain: $(TEST_OBJECTS) $(OBJECTS)
+TestTargetMain: $(OBJECTS) $(TEST_OBJECTS)
 	@echo -e ${MSG_B}Compile DONE.${MSG_E}
 	@echo -e ${MSG_B}Linking Unit-Test Executable.${MSG_E}
 	$(CXX) $(CFLAGS) -o $(TEST_TARGET) $^ $(DEPENDENCIES_TEST_LIBDIR) $(DEPENDENCIES_TEST_LIBS)

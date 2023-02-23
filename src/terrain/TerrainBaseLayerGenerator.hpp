@@ -30,9 +30,19 @@ namespace a3c
   public:
     TerrainBaseLayerGenerator();
     ~TerrainBaseLayerGenerator();
-    void setConfig(TerrainBaseConfig conf);
 
     // 基本的 Terrain, History, Ruin, Organization, Map DestructionArea 作成
     void generateBaseTerrain();
+
+    // ============= アクセサメソッド ===============
+    /// @brief
+    ///  マップ生成に必要な情報を config 形式で設定する。
+    ///  マップ生成には generateBaseTerrain を別途呼び出しする必要がある
+    /// @param conf マップ生成に必要な情報
+    void setConfig(TerrainBaseConfig conf);
+
+    /// @brief 大域用マップデータの HeightField への参照を取得する
+    /// @return
+    Memory2d<float> *getStrategyMapHF();
   };
 }

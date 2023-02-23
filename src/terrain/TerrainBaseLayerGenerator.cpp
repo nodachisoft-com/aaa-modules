@@ -11,15 +11,6 @@ TerrainBaseLayerGenerator::~TerrainBaseLayerGenerator()
 {
 }
 
-void TerrainBaseLayerGenerator::setConfig(TerrainBaseConfig _conf)
-{
-  conf = _conf;
-  biom.init(_conf.Seed, (unsigned char)_conf.NaturalBiomeTypes, 32, 32);
-  layer1.init(_conf.Seed);
-  layer2.init(_conf.Seed + 66);
-  layer3.init(_conf.Seed + 100);
-}
-
 void TerrainBaseLayerGenerator::generateBaseTerrain()
 {
   // Continents/Biom などの基本的な地理情報を 1024 x 1024 で生成し、
@@ -58,21 +49,18 @@ void TerrainBaseLayerGenerator::generateBaseTerrain()
       }
     }
   }
+}
 
-  // デバッグ画像出力
-  // DEBUG 用の画像出力
+void TerrainBaseLayerGenerator::setConfig(TerrainBaseConfig _conf)
+{
+  conf = _conf;
+  biom.init(_conf.Seed, (unsigned char)_conf.NaturalBiomeTypes, 32, 32);
+  layer1.init(_conf.Seed);
+  layer2.init(_conf.Seed + 66);
+  layer3.init(_conf.Seed + 100);
+}
 
-  BitmapImage image(width, height);
-  for (int v = 0; v < height; v++)
-  {
-    for (int u = 0; u < width; u++)
-    {
-      float res = strategyMapHF.getWithIgnoreOutOfRangeData(u, v);
-      unsigned char color_elem = (unsigned char)res;
-      ColorRGB color{color_elem, color_elem, color_elem};
-      image.set(u, v, color);
-    }
-  }
-  image.WriteBmp("./debug/0000_test.bmp");
-  std::cout << "Bitmap Released!" << std::endl;
+Memory2d<float> *TerrainBaseLayerGenerator::getStrategyMapHF()
+{
+  return &strategyMapHF;
 }
