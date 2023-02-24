@@ -21,23 +21,28 @@ TEST(TerrainHfLayer, getHeight_case001)
 {
   std::string pathPrefix = TESTTMP_DIR + "TerrainHfLayer_getHeight_case001_";
 
-  float mapSizeX = 800;
-  float mapSizeY = 600;
-  float imgWidth = 400;
-  float imgHeight = 300;
+  float mapSizeX = 800 * 6;
+  float mapSizeY = 600 * 6;
+  float imgWidth = 400 * 1;
+  float imgHeight = 300 * 1;
   Memory2d<float> strategyMapHF(imgWidth, imgHeight, 0.0f);
 
   Rectangle2d area1({0, 0}, {mapSizeX, mapSizeY}); // レンダリング範囲を指定
   TerrainHfLayer layer;
-  // TODO : noize 濃度を 0.0-1.0 で指定可能とすること
-  layer.init(TerrainHfLayer::MODE_PPN, 101, area1, {mapSizeX, mapSizeY}, {8, 6});
 
-  for (int i = 0; i < 7; i++)
+  layer.init(TerrainHfLayer::MODE_PPN, 101, area1, {mapSizeX, mapSizeY}, {8 * 6, 6 * 6});
+
+  // 想定される結果
+  unsigned long crc32expectList[] = {1431682718,
+                                     999677722,
+                                     2433758862};
+
+  for (int i = 0; i < 3; i++)
   {
-    float diff = 0.0485f;
+    float diff = (0.5f - 0.010f) / (3.0f - 1.0f);
     Rectangle2d viewWindow(
-        {imgWidth * diff * i, imgHeight * diff * i},
-        {imgWidth * (1.0f - diff * i), imgHeight * (1.0f - diff * i)});
+        {mapSizeX * diff * i, mapSizeY * diff * i},
+        {mapSizeX * (1.0f - diff * i), mapSizeY * (1.0f - diff * i)});
     layer.setWindowArea(viewWindow);
 
     for (int v = 0; v < imgHeight; v++)
@@ -48,6 +53,8 @@ TEST(TerrainHfLayer, getHeight_case001)
         strategyMapHF.setWithIgnoreOutOfRangeData(u, v, h);
       }
     }
-    TestUtil::drawHfColorful(&strategyMapHF, pathPrefix + std::to_string(i) + ".bmp");
+    std::string path = pathPrefix + std::to_string(i) + ".bmp";
+    unsigned long crc32result = TestUtil::drawHfColorful(&strategyMapHF, path);
+    EXPECT_EQ(crc32expectList[i], crc32result);
   }
 }
