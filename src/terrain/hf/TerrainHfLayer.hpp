@@ -75,5 +75,7 @@ namespace a3c
     /// @param u x 成分方向を指定。[0.0f - 1.0f] の範囲で指定すると、windowArea に収まる
     /// @param v y 成分方向を指定。[0.0f - 1.0f] の範囲で指定すると、windowArea に収まる
     float getHeight(float u, float v);
+
+    Vector2d getWindowArea();
   };
 };

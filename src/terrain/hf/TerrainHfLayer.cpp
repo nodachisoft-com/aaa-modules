@@ -72,3 +72,8 @@ float TerrainHfLayer::getHeight(float u, float v)
       noisePointSize.x, noisePointSize.y, 255.0f);
   return res1;
 }
+
+Vector2d TerrainHfLayer::getWindowArea()
+{
+  return windowArea;
+}
