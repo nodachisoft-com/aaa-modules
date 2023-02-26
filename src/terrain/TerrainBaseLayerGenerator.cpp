@@ -17,18 +17,80 @@ void TerrainBaseLayerGenerator::generateBaseTerrain()
   Size2d resSize = conf.getStrategyResolutionSize();
   int width = resSize.x;
   int height = resSize.y;
+
+  // HeightField 作成
   strategyMapHF.init(resSize.x, resSize.y, 0.0f);
-
+  for (int v = 0; v < height; v++)
   {
-    for (int v = 0; v < height; v++)
+    for (int u = 0; u < width; u++)
     {
-      for (int u = 0; u < width; u++)
-      {
-        float res = getLayerHfAsWorldmapchip_StrategyLevel(
-            u * conf.MapUnitChipSize,
-            v * conf.MapUnitChipSize);
+      float res = getLayerHfAsWorldmapchip_StrategyLevel(
+          u * conf.MapUnitChipSize,
+          v * conf.MapUnitChipSize);
 
-        strategyMapHF.setWithIgnoreOutOfRangeData(u, v, res);
+      strategyMapHF.setWithIgnoreOutOfRangeData(u, v, res);
+    }
+  }
+
+  // 地層（Stratum）定義
+  int STRATUM_DEEPSEA = 0;      // 深海
+  int STRATUM_SEA = 1;          // 浅瀬
+  int STRATUM_SEASHORE = 2;     // 海岸の砂浜
+  int STRATUM_PLAIN = 3;        // 様々なバイオームが存在する領域
+  int STRATUM_MOUNTAIN = 4;     // 山岳
+  int STRATUM_SNOWMOUNTAIN = 5; // 高山（雪）
+  std::vector<float> stratumLv{
+      100.0f,
+      120.0f,
+      124.0f,
+      140.0f,
+      200.0f,
+      999.0f};
+
+  // Biome 定義
+  int BIOME_DEEPSEA = 0;  // 深海
+  int BIOME_SEA = 1;      // 浅瀬
+  int BIOME_SEASHORE = 2; // 海岸の砂浜
+  int BIOME_MEADOW = 3;   // 草原 ( voronoi type = 0 )
+  // int BIOME_FOREST = 4;    // 森 ( voronoi type = 1 )
+  // int BIOME_DESERT = 5;    // 砂漠 ( voronoi type = 2 )
+  // int BIOME_WASTELAND = 6; // 荒地 ( voronoi type = 3 )
+  // int BIOME_POISONED = 7;  // 化学汚染 ( voronoi type = 4 )
+  int BIOME_MOUNTAIN = 8; // 山岳
+  int BIOME_SNOW = 9;     // 雪
+
+  strategyMapBiomNo.init(resSize.x, resSize.y, 0);
+  for (int v = 0; v < height; v++)
+  {
+    for (int u = 0; u < width; u++)
+    {
+      float b = biom.pos2((8 * u) / (float)width, (8 * v) / (float)height);
+      float height = strategyMapHF.getWithIgnoreOutOfRangeData(u, v);
+      if (height < stratumLv[STRATUM_DEEPSEA])
+      {
+        strategyMapBiomNo.setWithIgnoreOutOfRangeData(u, v, BIOME_DEEPSEA);
+      }
+      else if (height < stratumLv[STRATUM_SEA])
+      {
+        strategyMapBiomNo.setWithIgnoreOutOfRangeData(u, v, BIOME_SEA);
+      }
+      else if (height < stratumLv[STRATUM_SEASHORE])
+      {
+        strategyMapBiomNo.setWithIgnoreOutOfRangeData(u, v, BIOME_SEASHORE);
+      }
+      else if (height < stratumLv[STRATUM_PLAIN])
+      {
+        // 平地で様々な Biome が発生する
+        int biomeType = b + BIOME_MEADOW;
+        strategyMapBiomNo.setWithIgnoreOutOfRangeData(u, v, biomeType);
+      }
+      else if (height < stratumLv[STRATUM_MOUNTAIN])
+      {
+        strategyMapBiomNo.setWithIgnoreOutOfRangeData(u, v, BIOME_MOUNTAIN);
+      }
+      else if (height < stratumLv[STRATUM_SNOWMOUNTAIN])
+      {
+        strategyMapBiomNo.setWithIgnoreOutOfRangeData(u, v, BIOME_SNOW);
       }
     }
   }
@@ -79,15 +141,10 @@ float TerrainBaseLayerGenerator::getLayerHfAsWorldmapchip_StrategyLevel(const fl
 void TerrainBaseLayerGenerator::setConfig(TerrainBaseConfig _conf)
 {
   conf = _conf;
-  biom.init(_conf.Seed, (unsigned char)_conf.NaturalBiomeTypes, 32, 32);
+  biom.init(_conf.Seed, (unsigned char)_conf.NaturalBiomeTypes, 8, 8);
   layer1.init(_conf.Seed);
   layer2.init(_conf.Seed + 66);
   layer3.init(_conf.Seed + 100);
   layer4.init(_conf.Seed + 103);
   edgeFileter.init(_conf.mapEdgeWide / _conf.WorldScale);
-}
-
-Memory2d<float> *TerrainBaseLayerGenerator::getStrategyMapHF()
-{
-  return &strategyMapHF;
 }

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <ndclibs.hpp>
 #include "TerrainBaseConfig.hpp"
+#include "Biome.hpp"
 
 using namespace nl;
 
@@ -33,6 +34,9 @@ namespace a3c
     /// @brief Strategy 計算用の大域マップデータ（HF）を生成する
     Memory2d<float> strategyMapHF;
 
+    /// @brief Biome 番号を取得
+    Memory2d<short> strategyMapBiomNo;
+
   public:
     TerrainBaseLayerGenerator();
     ~TerrainBaseLayerGenerator();
@@ -55,6 +59,16 @@ namespace a3c
 
     /// @brief 大域用マップデータの HeightField への参照を取得する
     /// @return
-    Memory2d<float> *getStrategyMapHF();
+    Memory2d<float> *getStrategyMapHF()
+    {
+      return &strategyMapHF;
+    }
+
+    /// @brief 大域用マップデータの MapBiomeType への参照を取得する
+    /// @return
+    Memory2d<short> *getStrategyMapBiomNo()
+    {
+      return &strategyMapBiomNo;
+    }
   };
 }

@@ -6,7 +6,9 @@ using namespace nl;
 
 namespace a3c
 {
-  /// @brief World Map のベースとなる生成のための各種パラメータを定義
+  /// @brief
+  ///  World Map のベースとなる生成のための各種パラメータを定義
+  ///  TODO: json などで外部から取り込み可能な UnorderedMap 形式の KeyValue データを持つ
   class TerrainBaseConfig
   {
 

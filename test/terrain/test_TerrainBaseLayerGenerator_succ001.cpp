@@ -21,10 +21,13 @@ TEST(TerrainBaseLayerGenerator, getStrategyMapHF_case001)
   terrainGenerator.setConfig(conf);
   terrainGenerator.generateBaseTerrain();
 
-  // デバッグ画像出力
+  // HF のデバッグ画像出力
   Memory2d<float> *hf = terrainGenerator.getStrategyMapHF();
-  TestUtil::drawHfColorful(hf, TESTTMP_DIR + "getStrategyMapHF_001.bmp");
+  TestUtil::drawHfColorful(hf, TESTTMP_DIR + "getStrategyMapHF_001_HF.bmp");
 
+  // BIOME のデバッグ画像出力
+  Memory2d<short> *biomeType = terrainGenerator.getStrategyMapBiomNo();
+  TestUtil::drawBiomeNoColorful(biomeType, TESTTMP_DIR + "getStrategyMapHF_001_BiomeType.bmp");
   // 計算結果確認
   // EXPECT_EQ(0xed82cd11, result);
   // EXPECT_EQ(0xed82cd11, crc.getHash());
