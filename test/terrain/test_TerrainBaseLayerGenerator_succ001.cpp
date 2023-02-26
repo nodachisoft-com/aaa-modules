@@ -7,13 +7,15 @@
 using namespace nl;
 using namespace a3c;
 
-TEST(TerrainBaseLayerGenerator, initialize_case001)
+TEST(TerrainBaseLayerGenerator, getStrategyMapHF_case001)
 {
 
   TerrainBaseConfig conf;
-  conf.Seed = 100;
+  conf.Seed = 101;
   conf.NaturalBiomeTypes = 4;
-  conf.WorldSmallestMapunitSize = Size2d(1024, 1024);
+  conf.WorldSmallestMapunitSize = Size2d(256, 256);
+  conf.WorldScale = 4;
+  conf.mapEdgeWide = 0.4f;
 
   TerrainBaseLayerGenerator terrainGenerator;
   terrainGenerator.setConfig(conf);
@@ -21,7 +23,7 @@ TEST(TerrainBaseLayerGenerator, initialize_case001)
 
   // デバッグ画像出力
   Memory2d<float> *hf = terrainGenerator.getStrategyMapHF();
-  TestUtil::drawHfColorful(hf, "./debug/0001_test.bmp");
+  TestUtil::drawHfColorful(hf, TESTTMP_DIR + "getStrategyMapHF_001.bmp");
 
   // 計算結果確認
   // EXPECT_EQ(0xed82cd11, result);

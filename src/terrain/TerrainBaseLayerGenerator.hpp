@@ -15,14 +15,20 @@ namespace a3c
     /// @brief Biome
     NdcVoronoi biom;
 
-    /// @brief Terrain layer1
+    /// @brief Terrain layer1 ( Strategy Use )
     PerlinNoise1234 layer1;
 
-    /// @brief Terrain layer2
+    /// @brief Terrain layer2 ( Strategy Use )
     PerlinNoise1234 layer2;
 
-    /// @brief Terrain layer3
+    /// @brief Terrain layer3 ( Strategy Use )
     PerlinNoise1234 layer3;
+
+    /// @brief Terrain layer4 ( Strategy Use )
+    PerlinNoise1234 layer4;
+
+    /// @brief マップ縁を海に鎮めるフィルタ
+    EdgeNoiseCurveFilter edgeFileter;
 
     /// @brief Strategy 計算用の大域マップデータ（HF）を生成する
     Memory2d<float> strategyMapHF;
@@ -34,6 +40,12 @@ namespace a3c
     // 基本的 Terrain, History, Ruin, Organization, Map DestructionArea 作成
     void generateBaseTerrain();
 
+    float getWorldmapchipHf(const float u, const float v);
+
+  private:
+    float getLayerHfAsWorldmapchip_StrategyLevel(const float u, const float v);
+
+  public:
     // ============= アクセサメソッド ===============
     /// @brief
     ///  マップ生成に必要な情報を config 形式で設定する。

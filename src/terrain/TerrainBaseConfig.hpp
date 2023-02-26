@@ -32,6 +32,9 @@ namespace a3c
     ///  例）32 なら、1つのマップユニットは 32 * 32 のマップチップを持つ
     int MapUnitChipSize;
 
+    /// @brief SMALLEST サイズベースでマップ端からの海の範囲を指定。[0.0f-0.5f] で指定する
+    float mapEdgeWide;
+
   public:
     /// @brief Config をデフォルト値で初期化する
     TerrainBaseConfig();
