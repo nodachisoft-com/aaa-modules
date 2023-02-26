@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <ndclibs.hpp>
+#include "../TerrainBaseConfig.hpp"
 #include "TerrainHfLayer.hpp"
 
 using namespace nl;
@@ -11,13 +12,15 @@ namespace a3c
   /// @brief 地形の HF を生成する
   class TerrainHfGenerator
   {
-  public:
-    enum MAPSIZE
-    {
-      SMALL,
-      MEDIUM,
-      LARGE
-    };
+  private:
+    /// @brief 地形生成に必要な各種パラメータを取得する元
+    TerrainBaseConfig conf;
+
+    /// @brief 世界全体でのチップレベルでの数
+    Size2d worldMapchipSize;
+
+    /// @brief ストラテジー解析用（広域マップ）の解像度
+    Size2d strategyMapUnitResolution;
 
   private:
     TerrainHfLayer hf1;
@@ -27,15 +30,25 @@ namespace a3c
 
   public:
     TerrainHfGenerator();
-    TerrainHfGenerator(
-        int randomSeed,
-        MAPSIZE mapsize);
+    TerrainHfGenerator(TerrainBaseConfig conf);
 
-    bool init(
-        int randomSeed,
-        MAPSIZE mapsize);
+    bool init(TerrainBaseConfig conf);
 
-    // TODO: 作成
-    float getHeight(int u, int v);
+    float getHeightAtWholemapChip(float u, float v);
+
+    float getHeightAtStrategyResolution(float u, float v);
+
+  public: // アクセサメソッド
+    /// @brief 世界全体でのチップレベルでの数を取得
+    Size2d getWorldMapchipSize()
+    {
+      return worldMapchipSize;
+    }
+
+    /// @brief ストラテジー解析用（広域マップ）の数を取得
+    Size2d getStrategyMapUnitResolution()
+    {
+      return strategyMapUnitResolution;
+    }
   };
 }

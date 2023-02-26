@@ -73,7 +73,7 @@ float TerrainHfLayer::getHeight(float u, float v)
   return res1;
 }
 
-Vector2d TerrainHfLayer::getWindowArea()
+Rectangle2d TerrainHfLayer::getWindowArea()
 {
   return windowArea;
 }

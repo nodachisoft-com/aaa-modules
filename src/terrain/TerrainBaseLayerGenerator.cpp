@@ -15,6 +15,7 @@ void TerrainBaseLayerGenerator::generateBaseTerrain()
 {
   // Continents/Biom などの基本的な地理情報を 1024 x 1024 で生成し、
   // 勢力図、経路情報の生成に使用する
+  // TODO: ベースの TF 生成は TerrainHF Generator 側に任せる(あとで差し替え)
   int width = 1024;
   int height = 1024;
   strategyMapHF.init(width, height, 0.0f);
