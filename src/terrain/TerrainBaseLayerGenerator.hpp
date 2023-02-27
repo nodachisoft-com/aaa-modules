@@ -49,6 +49,15 @@ namespace a3c
   private:
     float getLayerHfAsWorldmapchip_StrategyLevel(const float u, const float v);
 
+    /// @brief StrategyMapHF を生成する
+    void generateStrategyMapHF();
+
+    /// @brief Strategy レベルで BiomeNo 割り振りデータを生成する
+    void generateStrategyMapBiomNo();
+
+    /// @brief Biome 領域ごとのユニークな ID を識別し、領域などの特性を記録する
+    void generateStrategyMapBiomeId();
+
   public:
     // ============= アクセサメソッド ===============
     /// @brief
