@@ -141,8 +141,9 @@ float TerrainBaseLayerGenerator::getLayerHfAsWorldmapchip_StrategyLevel(const fl
 void TerrainBaseLayerGenerator::setConfig(TerrainBaseConfig _conf)
 {
   conf = _conf;
-  // TODO: Conf で Vornoie の SMALLESET を指定できるようにする
-  biom.init(_conf.Seed, (unsigned char)_conf.NaturalBiomeTypes, 8, 8);
+
+  int biomeDivisionCount = _conf.BiomeDivisionSmallestCount * _conf.WorldScale;
+  biom.init(_conf.Seed, _conf.NaturalBiomeTypes, biomeDivisionCount, biomeDivisionCount);
   layer1.init(_conf.Seed);
   layer2.init(_conf.Seed + 66);
   layer3.init(_conf.Seed + 100);

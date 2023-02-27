@@ -17,7 +17,10 @@ namespace a3c
     int Seed;
 
     /// @brief 自然発生する Biome の種類数を指定
-    int NaturalBiomeTypes;
+    unsigned char NaturalBiomeTypes;
+
+    /// @brief World 生成時の SMALLEST サイズでの Biome 分割数について（x, y）成分それぞれを指定
+    int BiomeDivisionSmallestCount;
 
     /// @brief
     ///   World 生成時の SMALLEST サイズでの MapUnit のサイズを規定。
@@ -40,6 +43,13 @@ namespace a3c
   public:
     /// @brief Config をデフォルト値で初期化する
     TerrainBaseConfig();
+
+    void init(const int Seed, const unsigned char NaturalBiomeTypes,
+              const int BiomeDivisionSmallestCount,
+              const Size2d WorldSmallestMapunitSize,
+              const int WorldScale,
+              const int MapUnitChipSize,
+              const float mapEdgeWide);
 
     /// @brief World 全体でのマップチップサイズを取得する
     /// @return World 全体でのマップチップサイズ

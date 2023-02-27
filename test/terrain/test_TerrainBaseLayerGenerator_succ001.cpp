@@ -13,6 +13,7 @@ TEST(TerrainBaseLayerGenerator, getStrategyMapHF_case001)
   TerrainBaseConfig conf;
   conf.Seed = 101;
   conf.NaturalBiomeTypes = 4;
+  conf.BiomeDivisionSmallestCount = 12;
   conf.WorldSmallestMapunitSize = Size2d(256, 256);
   conf.WorldScale = 4;
   conf.mapEdgeWide = 0.4f;
