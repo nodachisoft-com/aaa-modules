@@ -157,6 +157,36 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomNo()
   }
 }
 
+void TerrainBaseConfig::generateStrategyMapBiomeId()
+{
+
+  struct LocalFunc
+  {
+    static int add(int a, int b)
+    {
+    }
+  };
+
+  Size2d resSize = conf.getStrategyResolutionSize();
+  int width = resSize.x;
+  int height = resSize.y;
+
+  // MapBiom のユニークな ID を採番していく。
+  // 一定以上のエリア（塗りつぶし面積）
+  strategyMapBiomeId.init(resSize.x, resSize.y, 0.0f);
+  for (int v = 0; v < height; v++)
+  {
+    for (int u = 0; u < width; u++)
+    {
+      // float res = getLayerHfAsWorldmapchip_StrategyLevel(
+      //     u * conf.MapUnitChipSize,
+      //     v * conf.MapUnitChipSize);
+
+      // strategyMapHF.setWithIgnoreOutOfRangeData(u, v, res);
+    }
+  }
+}
+
 void TerrainBaseLayerGenerator::setConfig(TerrainBaseConfig _conf)
 {
   conf = _conf;
