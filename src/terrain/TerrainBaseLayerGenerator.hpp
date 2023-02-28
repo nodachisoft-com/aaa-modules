@@ -34,8 +34,11 @@ namespace a3c
     /// @brief Strategy 計算用の大域マップデータ（HF）を生成する
     Memory2d<float> strategyMapHF;
 
-    /// @brief Biome 番号を取得
+    /// @brief Biome 番号を取得する。Voronoi 点にランダムに設定された値を設定する
     Memory2d<short> strategyMapBiomNo;
+
+    /// @brief Biome をユニークに識別する値を設定する。
+    Memory2d<short> strategyMapBiomeId;
 
   public:
     TerrainBaseLayerGenerator();
