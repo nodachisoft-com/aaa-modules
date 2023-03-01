@@ -27,7 +27,7 @@ TEST(TerrainBaseLayerGenerator, getStrategyMapHF_case001)
   TestUtil::drawHfColorful(hf, TESTTMP_DIR + "getStrategyMapHF_001_HF.bmp");
 
   // BIOME のデバッグ画像出力
-  Memory2d<short> *biomeType = terrainGenerator.getStrategyMapBiomNo();
+  Memory2d<short> *biomeType = terrainGenerator.getStrategyMapBiomType();
   TestUtil::drawBiomeNoColorful(biomeType, TESTTMP_DIR + "getStrategyMapHF_001_BiomeType.bmp");
   // 計算結果確認
   // EXPECT_EQ(0xed82cd11, result);

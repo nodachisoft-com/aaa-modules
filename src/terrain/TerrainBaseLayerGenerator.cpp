@@ -17,10 +17,10 @@ void TerrainBaseLayerGenerator::generateBaseTerrain()
   generateStrategyMapHF();
 
   // Strategy レベルで BiomeNo 割り振りデータを生成する
-  generateStrategyMapBiomNo();
+  generateStrategyMapBiomType();
 
-  // TODO:  実際のメンバ変数定義、メソッド実装を行う
-  // generateStrategyMapBiomeId();
+  // Map 上で一定以上の Biome サイズに対してユニークな ID および名称を割り振る
+  generateStrategyMapBiomeId();
 }
 
 float TerrainBaseLayerGenerator::getLayerHfAsWorldmapchip_StrategyLevel(const float u, const float v)
@@ -87,7 +87,7 @@ void TerrainBaseLayerGenerator::generateStrategyMapHF()
   }
 }
 
-void TerrainBaseLayerGenerator::generateStrategyMapBiomNo()
+void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
 {
   Size2d resSize = conf.getStrategyResolutionSize();
   int width = resSize.x;
@@ -120,7 +120,7 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomNo()
   int BIOME_MOUNTAIN = 8; // 山岳
   int BIOME_SNOW = 9;     // 雪
 
-  strategyMapBiomNo.init(resSize.x, resSize.y, 0);
+  strategyMapBiomType.init(resSize.x, resSize.y, 0);
   for (int v = 0; v < height; v++)
   {
     for (int u = 0; u < width; u++)
@@ -129,62 +129,155 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomNo()
       float height = strategyMapHF.getWithIgnoreOutOfRangeData(u, v);
       if (height < stratumLv[STRATUM_DEEPSEA])
       {
-        strategyMapBiomNo.setWithIgnoreOutOfRangeData(u, v, BIOME_DEEPSEA);
+        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_DEEPSEA);
       }
       else if (height < stratumLv[STRATUM_SEA])
       {
-        strategyMapBiomNo.setWithIgnoreOutOfRangeData(u, v, BIOME_SEA);
+        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_SEA);
       }
       else if (height < stratumLv[STRATUM_SEASHORE])
       {
-        strategyMapBiomNo.setWithIgnoreOutOfRangeData(u, v, BIOME_SEASHORE);
+        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_SEASHORE);
       }
       else if (height < stratumLv[STRATUM_PLAIN])
       {
         // 平地で様々な Biome が発生する
         int biomeType = b + BIOME_MEADOW;
-        strategyMapBiomNo.setWithIgnoreOutOfRangeData(u, v, biomeType);
+        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, biomeType);
       }
       else if (height < stratumLv[STRATUM_MOUNTAIN])
       {
-        strategyMapBiomNo.setWithIgnoreOutOfRangeData(u, v, BIOME_MOUNTAIN);
+        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_MOUNTAIN);
       }
       else if (height < stratumLv[STRATUM_SNOWMOUNTAIN])
       {
-        strategyMapBiomNo.setWithIgnoreOutOfRangeData(u, v, BIOME_SNOW);
+        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_SNOW);
       }
     }
   }
 }
 
-void TerrainBaseConfig::generateStrategyMapBiomeId()
+void TerrainBaseLayerGenerator::generateStrategyMapBiomeId()
 {
-
-  struct LocalFunc
+  std::cout << "begin :generateStrategyMapBiomeId" << std::endl;
+  struct Point
   {
-    static int add(int a, int b)
-    {
-    }
+    int x, y;
   };
 
   Size2d resSize = conf.getStrategyResolutionSize();
   int width = resSize.x;
   int height = resSize.y;
 
+  // 塗りつぶし済みを記録するフラグ用メモリ
+  // Memory2d<unsigned char> drawFlagMap;
+  // drawFlagMap.init(width, height, 0);
+
   // MapBiom のユニークな ID を採番していく。
   // 一定以上のエリア（塗りつぶし面積）
-  strategyMapBiomeId.init(resSize.x, resSize.y, 0.0f);
+  short biomeIdCount = 1;
+  strategyMapBiomeId.init(resSize.x, resSize.y, 0);
+
   for (int v = 0; v < height; v++)
   {
     for (int u = 0; u < width; u++)
     {
-      // float res = getLayerHfAsWorldmapchip_StrategyLevel(
-      //     u * conf.MapUnitChipSize,
-      //     v * conf.MapUnitChipSize);
+      if (strategyMapBiomeId.getWithIgnoreOutOfRangeData(u, v) != 0)
+      {
+        // 既に検査済み
+        continue;
+      }
 
-      // strategyMapHF.setWithIgnoreOutOfRangeData(u, v, res);
+      // 塗りつぶし開始点候補リスト
+      std::vector<Point> checkNextArea{};
+      int drawCount = 0;
+
+      // 検査する対象の色を取得し塗りつぶし検査対象リストに加える
+      short targetBiomeNo = strategyMapBiomType.getWithIgnoreOutOfRangeData(u, v);
+      checkNextArea.push_back({u, v});
+
+      while (!checkNextArea.empty())
+      {
+        Point &lastp = checkNextArea.back();
+        Point p;
+        p.x = lastp.x;
+        p.y = lastp.y;
+        checkNextArea.pop_back(); // 末尾要素を削除
+
+        drawCount++;
+        strategyMapBiomeId.setWithIgnoreOutOfRangeData(p.x, p.y, biomeIdCount);
+
+        // std::cout << "Check Next Area Size=" << checkNextArea.size() << " pos(" << p.x << "," << p.y << ")";
+        // if (checkNextArea.size() == 256 * 256)
+        // {
+        //   return;
+        // }
+        // 上が未検査かつ同じ Biome種類 かを調べる
+        if (p.y > 0)
+        {
+          // 同じ Biome 種類かを確認
+          if (targetBiomeNo == strategyMapBiomType.getWithIgnoreOutOfRangeData(p.x, p.y - 1))
+          {
+            // 未検査かを確認
+            if (strategyMapBiomeId.getWithIgnoreOutOfRangeData(p.x, p.y - 1) == 0)
+            {
+              // 未検査である場合、検査対象リストに追加する
+              checkNextArea.push_back({p.x, p.y - 1});
+              // std::cout << "U";
+            }
+          }
+        }
+        // 左が未検査かつ同じ Biome 種類かを調べる
+        if (p.x > 0)
+        {
+          // 同じ Biome 種類かを確認
+          if (targetBiomeNo == strategyMapBiomType.getWithIgnoreOutOfRangeData(p.x - 1, p.y))
+          {
+            // 未検査かを確認
+            if (strategyMapBiomeId.getWithIgnoreOutOfRangeData(p.x - 1, p.y) == 0)
+            {
+              // 未検査である場合、検査対象リストに追加する
+              checkNextArea.push_back({p.x - 1, p.y});
+              // std::cout << "L";
+            }
+          }
+        }
+        // 右が未検査かつ同じ Biome 種類かを調べる
+        if (p.x < width - 1)
+        {
+          if (targetBiomeNo == strategyMapBiomType.getWithIgnoreOutOfRangeData(p.x + 1, p.y))
+          {
+            // 同じ Biome 種類
+            if (strategyMapBiomeId.getWithIgnoreOutOfRangeData(p.x + 1, p.y) == 0)
+            {
+              // 未検査である場合、検査対象リストに追加する
+              checkNextArea.push_back({p.x + 1, p.y});
+              // std::cout << "R";
+            }
+          }
+        }
+        // 下が未検査かつ同じ Biome 種類かを調べる
+        if (p.y < height - 1)
+        {
+          if (targetBiomeNo == strategyMapBiomType.getWithIgnoreOutOfRangeData(p.x, p.y + 1))
+          {
+            // 同じ Biome 種類
+            if (strategyMapBiomeId.getWithIgnoreOutOfRangeData(p.x, p.y + 1) == 0)
+            {
+              // 未検査である場合、検査対象リストに追加する
+              checkNextArea.push_back({p.x, p.y + 1});
+              // std::cout << "B";
+            }
+          }
+        }
+        // std::cout << std::endl;
+      }
+      // DEBUG 出力
+      std::cout << "BiomeID[" << biomeIdCount << "]Biome Type=" << targetBiomeNo << ", Biome Area=" << drawCount << std::endl;
+      biomeIdCount++;
     }
   }
+  std::cout << "end :generateStrategyMapBiomeId" << std::endl;
 }
 
 void TerrainBaseLayerGenerator::setConfig(TerrainBaseConfig _conf)

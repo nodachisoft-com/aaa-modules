@@ -35,7 +35,7 @@ namespace a3c
     Memory2d<float> strategyMapHF;
 
     /// @brief Biome 番号を取得する。Voronoi 点にランダムに設定された値を設定する
-    Memory2d<short> strategyMapBiomNo;
+    Memory2d<short> strategyMapBiomType;
 
     /// @brief Biome をユニークに識別する値を設定する。
     Memory2d<short> strategyMapBiomeId;
@@ -56,7 +56,7 @@ namespace a3c
     void generateStrategyMapHF();
 
     /// @brief Strategy レベルで BiomeNo 割り振りデータを生成する
-    void generateStrategyMapBiomNo();
+    void generateStrategyMapBiomType();
 
     /// @brief Biome 領域ごとのユニークな ID を識別し、領域などの特性を記録する
     void generateStrategyMapBiomeId();
@@ -78,9 +78,16 @@ namespace a3c
 
     /// @brief 大域用マップデータの MapBiomeType への参照を取得する
     /// @return
-    Memory2d<short> *getStrategyMapBiomNo()
+    Memory2d<short> *getStrategyMapBiomType()
     {
-      return &strategyMapBiomNo;
+      return &strategyMapBiomType;
+    }
+
+    /// @brief 大域用マップデータの MapBiomeType への参照を取得する
+    /// @return
+    Memory2d<short> *getStrategyMapBiomeId()
+    {
+      return &strategyMapBiomeId;
     }
   };
 }
