@@ -3,7 +3,7 @@
 using namespace a3c;
 using namespace nl;
 
-TerrainBaseLayerGenerator::TerrainBaseLayerGenerator()
+TerrainBaseLayerGenerator::TerrainBaseLayerGenerator() : biomeList{}
 {
 }
 
@@ -159,7 +159,6 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
 
 void TerrainBaseLayerGenerator::generateStrategyMapBiomeId()
 {
-  std::cout << "begin :generateStrategyMapBiomeId" << std::endl;
   struct Point
   {
     int x, y;
@@ -168,10 +167,6 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomeId()
   Size2d resSize = conf.getStrategyResolutionSize();
   int width = resSize.x;
   int height = resSize.y;
-
-  // 塗りつぶし済みを記録するフラグ用メモリ
-  // Memory2d<unsigned char> drawFlagMap;
-  // drawFlagMap.init(width, height, 0);
 
   // MapBiom のユニークな ID を採番していく。
   // 一定以上のエリア（塗りつぶし面積）
@@ -192,6 +187,10 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomeId()
       std::vector<Point> checkNextArea{};
       int drawCount = 0;
 
+      // 重心を求めるための計算用変数(x成分)
+      float sumX = 0;
+      float sumY = 0;
+
       // 検査する対象の色を取得し塗りつぶし検査対象リストに加える
       short targetBiomeNo = strategyMapBiomType.getWithIgnoreOutOfRangeData(u, v);
       checkNextArea.push_back({u, v});
@@ -202,16 +201,21 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomeId()
         Point p;
         p.x = lastp.x;
         p.y = lastp.y;
+
+        if (strategyMapBiomeId.getWithIgnoreOutOfRangeData(p.x, p.y) != 0)
+        {
+          // 既に検査済み
+          checkNextArea.pop_back(); // 末尾要素を削除
+          continue;
+        }
+        sumX += p.x; // 重心計算用 x 成分を加算
+        sumY += p.y; // 重心計算用 y 成分を加算
+
         checkNextArea.pop_back(); // 末尾要素を削除
 
         drawCount++;
         strategyMapBiomeId.setWithIgnoreOutOfRangeData(p.x, p.y, biomeIdCount);
 
-        // std::cout << "Check Next Area Size=" << checkNextArea.size() << " pos(" << p.x << "," << p.y << ")";
-        // if (checkNextArea.size() == 256 * 256)
-        // {
-        //   return;
-        // }
         // 上が未検査かつ同じ Biome種類 かを調べる
         if (p.y > 0)
         {
@@ -223,7 +227,6 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomeId()
             {
               // 未検査である場合、検査対象リストに追加する
               checkNextArea.push_back({p.x, p.y - 1});
-              // std::cout << "U";
             }
           }
         }
@@ -238,7 +241,6 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomeId()
             {
               // 未検査である場合、検査対象リストに追加する
               checkNextArea.push_back({p.x - 1, p.y});
-              // std::cout << "L";
             }
           }
         }
@@ -252,7 +254,6 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomeId()
             {
               // 未検査である場合、検査対象リストに追加する
               checkNextArea.push_back({p.x + 1, p.y});
-              // std::cout << "R";
             }
           }
         }
@@ -266,18 +267,25 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomeId()
             {
               // 未検査である場合、検査対象リストに追加する
               checkNextArea.push_back({p.x, p.y + 1});
-              // std::cout << "B";
             }
           }
         }
-        // std::cout << std::endl;
       }
-      // DEBUG 出力
-      std::cout << "BiomeID[" << biomeIdCount << "]Biome Type=" << targetBiomeNo << ", Biome Area=" << drawCount << std::endl;
+      // 一定以上の Biome は一覧に記録する
+      if (drawCount > 20)
+      {
+        Biome biome;
+        biome.biomeNo = biomeIdCount;
+        biome.biomeKind = targetBiomeNo;
+        biome.biomeAreaSize = drawCount;
+        biome.centerPos = nl::Point2d(sumX / (float)drawCount, sumY / (float)drawCount);
+        biome.labelName = "Test";
+        biomeList.push_back(biome);
+      }
+
       biomeIdCount++;
     }
   }
-  std::cout << "end :generateStrategyMapBiomeId" << std::endl;
 }
 
 void TerrainBaseLayerGenerator::setConfig(TerrainBaseConfig _conf)

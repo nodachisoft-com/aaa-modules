@@ -15,12 +15,20 @@ TEST(TerrainBaseLayerGenerator, getStrategyMapHF_case001)
   conf.NaturalBiomeTypes = 4;
   conf.BiomeDivisionSmallestCount = 12;
   conf.WorldSmallestMapunitSize = Size2d(256, 256);
-  conf.WorldScale = 4;
+  conf.WorldScale = 8;
   conf.mapEdgeWide = 0.4f;
 
   TerrainBaseLayerGenerator terrainGenerator;
   terrainGenerator.setConfig(conf);
   terrainGenerator.generateBaseTerrain();
+
+  // BiomeList の内容を取得
+  std::vector<Biome> *refBiomeList = terrainGenerator.getBiomeList();
+  for (int i = 0; i < refBiomeList->size(); i++)
+  {
+    Biome elem = refBiomeList->at(i);
+    std::cout << "BiomeID[" << elem.biomeNo << "]Biome Type=" << elem.biomeKind << ", Biome Area=" << elem.biomeAreaSize << std::endl;
+  }
 
   // HF のデバッグ画像出力
   Memory2d<float> *hf = terrainGenerator.getStrategyMapHF();
@@ -28,7 +36,8 @@ TEST(TerrainBaseLayerGenerator, getStrategyMapHF_case001)
 
   // BIOME のデバッグ画像出力
   Memory2d<short> *biomeType = terrainGenerator.getStrategyMapBiomType();
-  TestUtil::drawBiomeNoColorful(biomeType, TESTTMP_DIR + "getStrategyMapHF_001_BiomeType.bmp");
+  TestUtil::drawBiomeNoColorful(
+      biomeType, TESTTMP_DIR + "getStrategyMapHF_001_BiomeType.bmp", refBiomeList);
   // 計算結果確認
   // EXPECT_EQ(0xed82cd11, result);
   // EXPECT_EQ(0xed82cd11, crc.getHash());

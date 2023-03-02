@@ -1,8 +1,10 @@
 #pragma once
 #include <vector>
 #include <ndclibs.hpp>
+#include "../../src/a3commonlib.hpp"
 
 using namespace nl;
+using namespace a3c;
 
 namespace TestUtil
 {
@@ -50,7 +52,8 @@ namespace TestUtil
   /// @param hf HeightField を格納した2次元データ。高さ情報として 0.0F-255.0F が格納される
   /// @param filepath 画像出力先のパス
   /// @return 生成した画像データの CRC32 を返す
-  static unsigned long drawHfColorful(Memory2d<float> *hf, const std::string filepath)
+  static unsigned long drawHfColorful(
+      Memory2d<float> *hf, const std::string filepath)
   {
     int width = hf->getWidth();
     int height = hf->getHeight();
@@ -76,7 +79,8 @@ namespace TestUtil
   /// @param biomeType BiomeType を格納した2次元データ。0 以上の Biome 種類が格納されている
   /// @param filepath 画像出力先のパス
   /// @return 生成した画像データの CRC32 を返す
-  static unsigned long drawBiomeNoColorful(Memory2d<short> *biomeType, const std::string filepath)
+  static unsigned long drawBiomeNoColorful(
+      Memory2d<short> *biomeType, const std::string filepath, std::vector<Biome> *refBiomeList)
   {
     std::vector<ColorRGB> colorList = {
         {0, 0, 142},     // 青 : 深海 : 0
@@ -108,6 +112,15 @@ namespace TestUtil
         crc.calcUpdate(color.b);
       }
     }
+    // BIOME LABEL の記述
+    ColorRGB COLOR_RED{(unsigned char)255, (unsigned char)0, (unsigned char)0};
+    int biomeSize = refBiomeList->size();
+    for (int i = 0; i < biomeSize; i++)
+    {
+      Biome biome = refBiomeList->at(i);
+      image.writeText(biome.centerPos.x, biome.centerPos.y, biome.labelName, COLOR_RED);
+    }
+
     image.WriteBmp(filepath);
     return crc.getHash();
   }

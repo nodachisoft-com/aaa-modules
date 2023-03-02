@@ -40,6 +40,9 @@ namespace a3c
     /// @brief Biome をユニークに識別する値を設定する。
     Memory2d<short> strategyMapBiomeId;
 
+    /// @brief 一定の面積以上のラベルをもつ Biome を記録する
+    std::vector<Biome> biomeList;
+
   public:
     TerrainBaseLayerGenerator();
     ~TerrainBaseLayerGenerator();
@@ -77,17 +80,24 @@ namespace a3c
     }
 
     /// @brief 大域用マップデータの MapBiomeType への参照を取得する
-    /// @return
+    /// @return 大域用マップデータの MapBiomeType への参照
     Memory2d<short> *getStrategyMapBiomType()
     {
       return &strategyMapBiomType;
     }
 
     /// @brief 大域用マップデータの MapBiomeType への参照を取得する
-    /// @return
+    /// @return 大域用マップデータの MapBiomeType への参照
     Memory2d<short> *getStrategyMapBiomeId()
     {
       return &strategyMapBiomeId;
+    }
+
+    /// @brief Biome リストへの参照を取得する
+    /// @return Biome リストへの参照
+    std::vector<Biome> *getBiomeList()
+    {
+      return &biomeList;
     }
   };
 }
