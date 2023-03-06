@@ -105,7 +105,7 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
       100.0f,
       120.0f,
       124.0f,
-      160.0f,
+      150.0f,
       180.0f,
       999.0f};
 
@@ -120,14 +120,22 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
   // int BIOME_POISONED = 7;  // 化学汚染 ( voronoi type = 4 )
   int BIOME_MOUNTAIN = 8; // 山岳
   int BIOME_SNOW = 9;     // 雪
+  // TODO: 雪山の BIOME を作成し、平原の 雪とは区別すべし
 
   strategyMapBiomType.init(resSize.x, resSize.y, 0);
   for (int v = 0; v < height; v++)
   {
+    // 緯度を 0.0f ～ 1.0f の範囲で計算
+    float latitude = calcLatitude(v / (float)height);
+
     for (int u = 0; u < width; u++)
     {
       float b = biom.pos2((biomeDiv * u) / (float)width, (biomeDiv * v) / (float)height);
       float height = strategyMapHF.getWithIgnoreOutOfRangeData(u, v);
+      // 北極南極に近く雪の地域
+      bool highLatitudeSnow = (height * 0.5f + 128.0f) * latitude >= 150.0f;
+
+      // HF の高さにより、選択可能な Biome を分別する
       if (height < stratumLv[STRATUM_DEEPSEA])
       {
         strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_DEEPSEA);
@@ -136,15 +144,30 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
       {
         strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_SEA);
       }
+      // 陸上の Biome
       else if (height < stratumLv[STRATUM_SEASHORE])
       {
-        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_SEASHORE);
+        if (highLatitudeSnow) // 北極南極の近く
+        {
+          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_SNOW);
+        }
+        else
+        {
+          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_SEASHORE);
+        }
       }
       else if (height < stratumLv[STRATUM_PLAIN])
       {
-        // 平地で様々な Biome が発生する
-        int biomeType = b + BIOME_MEADOW;
-        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, biomeType);
+        if (highLatitudeSnow) // 北極南極の近く
+        {
+          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_SNOW);
+        }
+        else
+        {
+          // 平地で様々な Biome が発生する
+          int biomeType = b + BIOME_MEADOW;
+          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, biomeType);
+        }
       }
       else if (height < stratumLv[STRATUM_MOUNTAIN])
       {

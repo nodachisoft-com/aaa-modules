@@ -53,6 +53,18 @@ namespace a3c
     float getWorldmapchipHf(const float u, const float v);
 
   private:
+    /// @brief 赤道を 0 度(=0.0f) とし、南極・北極を 90 度(=1.0f) とする。
+    /// @param v 座標 0.0f ～ 1.0f でマップの Y 成分を指定する
+    /// @return 0.0f ～ 1.0f で緯度を返す
+    float calcLatitude(const float v)
+    {
+      if (v < 0.5f)
+      {
+        return (0.5f - v) * 2.0f;
+      }
+      return (v - 0.5f) * 2.0f;
+    }
+
     float getLayerHfAsWorldmapchip_StrategyLevel(const float u, const float v);
 
     /// @brief StrategyMapHF を生成する
