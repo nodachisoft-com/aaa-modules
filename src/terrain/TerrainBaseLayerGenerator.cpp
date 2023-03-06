@@ -105,8 +105,8 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
       100.0f,
       120.0f,
       124.0f,
-      140.0f,
-      200.0f,
+      160.0f,
+      180.0f,
       999.0f};
 
   // Biome 定義

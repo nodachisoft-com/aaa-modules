@@ -24,11 +24,12 @@ TEST(TerrainBaseLayerGenerator, getStrategyMapHF_case001)
 
   // BiomeList の内容を取得
   std::vector<Biome> *refBiomeList = terrainGenerator.getBiomeList();
-  for (int i = 0; i < refBiomeList->size(); i++)
-  {
-    Biome elem = refBiomeList->at(i);
-    std::cout << "BiomeID[" << elem.biomeNo << "] Biome Type=" << elem.biomeKind << ", Biome Area=" << elem.biomeAreaSize << std::endl;
-  }
+  /*
+for (int i = 0; i < refBiomeList->size(); i++)
+{
+  Biome elem = refBiomeList->at(i);
+  std::cout << "BiomeID[" << elem.biomeNo << "] Biome Type=" << elem.biomeKind << ", Biome Area=" << elem.biomeAreaSize << std::endl;
+}*/
 
   // HF のデバッグ画像出力
   Memory2d<float> *hf = terrainGenerator.getStrategyMapHF();
