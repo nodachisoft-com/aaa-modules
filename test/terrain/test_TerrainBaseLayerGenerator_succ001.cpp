@@ -13,7 +13,7 @@ TEST(TerrainBaseLayerGenerator, getStrategyMapHF_case001)
   TerrainBaseConfig conf;
   conf.Seed = 101;
   conf.NaturalBiomeTypes = 4;
-  conf.BiomeDivisionSmallestCount = 12;
+  conf.BiomeDivisionSmallestCount = 3;
   conf.WorldSmallestMapunitSize = Size2d(256, 256);
   conf.WorldScale = 8;
   conf.mapEdgeWide = 0.4f;
@@ -27,7 +27,7 @@ TEST(TerrainBaseLayerGenerator, getStrategyMapHF_case001)
   for (int i = 0; i < refBiomeList->size(); i++)
   {
     Biome elem = refBiomeList->at(i);
-    std::cout << "BiomeID[" << elem.biomeNo << "]Biome Type=" << elem.biomeKind << ", Biome Area=" << elem.biomeAreaSize << std::endl;
+    std::cout << "BiomeID[" << elem.biomeNo << "] Biome Type=" << elem.biomeKind << ", Biome Area=" << elem.biomeAreaSize << std::endl;
   }
 
   // HF のデバッグ画像出力

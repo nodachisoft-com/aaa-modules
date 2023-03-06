@@ -14,7 +14,7 @@ namespace a3c
     TerrainBaseConfig conf;
 
     /// @brief Biome
-    NdcVoronoi biom;
+    NdcNoisedEdgeVoronoi biom;
 
     /// @brief Terrain layer1 ( Strategy Use )
     PerlinNoise1234 layer1;

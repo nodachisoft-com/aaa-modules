@@ -92,6 +92,7 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
   Size2d resSize = conf.getStrategyResolutionSize();
   int width = resSize.x;
   int height = resSize.y;
+  int biomeDiv = conf.WorldScale * conf.BiomeDivisionSmallestCount;
 
   // 地層（Stratum）定義
   int STRATUM_DEEPSEA = 0;      // 深海
@@ -125,7 +126,7 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
   {
     for (int u = 0; u < width; u++)
     {
-      float b = biom.pos2((8 * u) / (float)width, (8 * v) / (float)height);
+      float b = biom.pos2((biomeDiv * u) / (float)width, (biomeDiv * v) / (float)height);
       float height = strategyMapHF.getWithIgnoreOutOfRangeData(u, v);
       if (height < stratumLv[STRATUM_DEEPSEA])
       {
@@ -293,6 +294,7 @@ void TerrainBaseLayerGenerator::setConfig(TerrainBaseConfig _conf)
   conf = _conf;
 
   int biomeDivisionCount = _conf.BiomeDivisionSmallestCount * _conf.WorldScale;
+  //  biom.init(_conf.Seed, _conf.NaturalBiomeTypes, biomeDivisionCount, biomeDivisionCount);
   biom.init(_conf.Seed, _conf.NaturalBiomeTypes, biomeDivisionCount, biomeDivisionCount);
   layer1.init(_conf.Seed);
   layer2.init(_conf.Seed + 66);
