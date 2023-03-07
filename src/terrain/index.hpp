@@ -4,4 +4,5 @@
 #pragma once
 #include "TerrainBaseConfig.hpp"
 #include "TerrainBaseLayerGenerator.hpp"
+#include "TerrainConfig.hpp"
 #include "TerrainEngine.hpp"

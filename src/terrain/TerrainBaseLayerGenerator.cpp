@@ -94,6 +94,7 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
   int height = resSize.y;
   int biomeDiv = conf.WorldScale * conf.BiomeDivisionSmallestCount;
 
+  // TODO: リテラル値は最終的に Config で外部から挿入できるようにする
   // 地層（Stratum）定義
   int STRATUM_DEEPSEA = 0;      // 深海
   int STRATUM_SEA = 1;          // 浅瀬
@@ -101,6 +102,7 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
   int STRATUM_PLAIN = 3;        // 様々なバイオームが存在する領域
   int STRATUM_MOUNTAIN = 4;     // 山岳
   int STRATUM_SNOWMOUNTAIN = 5; // 高山（雪）
+  // 地層を適用する高さ（HeightField の値）
   std::vector<float> stratumLv{
       100.0f,
       120.0f,
@@ -118,8 +120,9 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
   // int BIOME_DESERT = 5;    // 砂漠 ( voronoi type = 2 )
   // int BIOME_WASTELAND = 6; // 荒地 ( voronoi type = 3 )
   // int BIOME_POISONED = 7;  // 化学汚染 ( voronoi type = 4 )
-  int BIOME_MOUNTAIN = 8; // 山岳
-  int BIOME_SNOW = 9;     // 雪
+  int BIOME_MOUNTAIN = 8;      // 山岳
+  int BIOME_SNOW = 9;          // 雪
+  int BIOME_MOUNTAINSNOW = 10; // 山の雪
   // TODO: 雪山の BIOME を作成し、平原の 雪とは区別すべし
 
   strategyMapBiomType.init(resSize.x, resSize.y, 0);
@@ -171,11 +174,19 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
       }
       else if (height < stratumLv[STRATUM_MOUNTAIN])
       {
-        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_MOUNTAIN);
+        if (highLatitudeSnow) // 北極南極に近く、雪山バイオーム
+        {
+          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_MOUNTAINSNOW);
+        }
+        else
+        {
+          // 山岳バイオーム
+          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_MOUNTAIN);
+        }
       }
       else if (height < stratumLv[STRATUM_SNOWMOUNTAIN])
       {
-        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_SNOW);
+        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_MOUNTAINSNOW);
       }
     }
   }
@@ -312,7 +323,7 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomeId()
   }
 }
 
-void TerrainBaseLayerGenerator::setConfig(TerrainBaseConfig _conf)
+void TerrainBaseLayerGenerator::init(TerrainBaseConfig _conf)
 {
   conf = _conf;
 

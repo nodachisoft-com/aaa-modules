@@ -47,7 +47,13 @@ namespace a3c
     TerrainBaseLayerGenerator();
     ~TerrainBaseLayerGenerator();
 
-    // 基本的 Terrain, History, Ruin, Organization, Map DestructionArea 作成
+    /// @brief
+    ///  マップ生成に必要な情報を config 形式で設定する。
+    ///  マップ生成には generateBaseTerrain を別途呼び出しする必要がある
+    /// @param conf マップ生成に必要な情報
+    void init(TerrainBaseConfig conf);
+
+    // 基本的な HeightField、Biome 情報を生成する
     void generateBaseTerrain();
 
     float getWorldmapchipHf(const float u, const float v);
@@ -78,11 +84,6 @@ namespace a3c
 
   public:
     // ============= アクセサメソッド ===============
-    /// @brief
-    ///  マップ生成に必要な情報を config 形式で設定する。
-    ///  マップ生成には generateBaseTerrain を別途呼び出しする必要がある
-    /// @param conf マップ生成に必要な情報
-    void setConfig(TerrainBaseConfig conf);
 
     /// @brief 大域用マップデータの HeightField への参照を取得する
     /// @return

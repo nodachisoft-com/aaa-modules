@@ -19,7 +19,7 @@ TEST(TerrainBaseLayerGenerator, getStrategyMapHF_case001)
   conf.mapEdgeWide = 0.4f;
 
   TerrainBaseLayerGenerator terrainGenerator;
-  terrainGenerator.setConfig(conf);
+  terrainGenerator.init(conf);
   terrainGenerator.generateBaseTerrain();
 
   // BiomeList の内容を取得
