@@ -16,7 +16,7 @@ build_ndc_cpp11_libs() {
   cd ../../
   pwd
 
-  mkdir ./lib/ndc-cpp11-libs
+  mkdir -p ./lib/ndc-cpp11-libs
   cp -r ./tmp/ndc-cpp11-libs/publish/* ./lib/ndc-cpp11-libs
   rm -rf ./tmp/ndc-cpp11-libs
   echo "[INFO] NDC-CPP11-LIBS COPIED TO ./lib/ndc-cpp11-libs/"
