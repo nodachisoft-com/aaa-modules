@@ -42,12 +42,14 @@ build_gtest() {
 
   # 出来上がったライブラリをプロジェクト参照先ライブラリのパスにコピー
   cd ../../../
-  rm -rf lib/dev/gtest/lib/*
-  cp -r tmp/googletest/build/lib/lib*.a lib/dev/gtest/lib/
+  rm -rf ./lib/dev/gtest/lib/*
+  mkdir -p ./lib/dev/gtest/lib
+  cp -r ./tmp/googletest/build/lib/lib*.a ./lib/dev/gtest/lib/
 
   rm -rf lib/dev/gtest/include/*
-  cp -r tmp/googletest/googlemock/include/gmock lib/dev/gtest/include/
-  cp -r tmp/googletest/googletest/include/gtest lib/dev/gtest/include/
+  mkdir -p ./lib/dev/gtest/include/
+  cp -r ./tmp/googletest/googlemock/include/gmock ./lib/dev/gtest/include/
+  cp -r ./tmp/googletest/googletest/include/gtest ./lib/dev/gtest/include/
   rm -rf tmp/*
 }
 
