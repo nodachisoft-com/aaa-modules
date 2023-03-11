@@ -184,7 +184,8 @@ testtmp: $(RUN_TMP_ENTRY_EXEC_FILE) clean_test copy_resources
 .PHONY: clean_test
 clean_test:
 	@echo -e ${MSG_B}Clear Debug Objects like BMP,TXT,BIN, etc..${MSG_E}
-	-rm -f ./debug/*.bmp ./debug/*.txt ./debug/*.bin ./debug/resources
+	-rm -f ./debug/*.bmp ./debug/*.txt ./debug/*.bin
+	-rm -rf ./debug/resources
 	@echo -e ${MSG_B}DONE.${MSG_E}
 
 

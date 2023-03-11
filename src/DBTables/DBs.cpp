@@ -5,13 +5,33 @@ using namespace a3c;
 
 DBs::DBs()
 {
+  initialized = false;
+  dbdataPath = "./resources/dbdata/";
+}
 
-  std::string path("./resources/dictionary/labels_geo.csv");
+bool DBs::init()
+{
+  if (initialized)
+  {
+    // 初期化済み
+    Logger logger;
+    logger.infoLog("DBs::init() already initialized.");
+    return false;
+  }
 
-  // 別途新しくファイルを開く
-  nl::FileAccessor fa(path);
-  // fa.getFiletype()
-  fa.readFileSync();
-  fa.getMemoryBank();
-  // LABELS_GEO_TABLE.readCSV();
+  {
+    // LABELS_GEO データ読み込み
+    std::string path(dbdataPath + "labels_geo.csv");
+    nl::FileAccessor fa(path);
+    if (fa.readFileSync() == false)
+    {
+      Logger logger;
+      logger.errorLog("DBs::init() Could'nt read labels_geo.csv");
+    }
+    std::string csvData = fa.getMemoryBank()->readStringToEnd();
+    CSVReader csvReader(',', '\\');
+    csvReader.readCsv(csvData);
+    TABLE_LABELS_GEO.readCSV(csvReader);
+  }
+  return true;
 }
