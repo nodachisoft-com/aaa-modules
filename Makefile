@@ -166,17 +166,17 @@ clean_publish:
 	@echo -e ${MSG_B}DONE.${MSG_E}
 
 
-test: $(TEST_TARGET) clean_test
-	@echo -e ${MSG_B}Exec Test.${MSG_E}
+test: $(TEST_TARGET) clean_test copy_resources
+	@echo -e ${MSG_B}Exec Test${MSG_E}
 	$(TEST_TARGET)
 	@echo -e ${MSG_B}DONE.${MSG_E}
 
-test-%: $(TEST_TARGET) clean_test
+test-%: $(TEST_TARGET) clean_test copy_resources
 	@echo -e ${MSG_B}Exec Test.${MSG_E}
 	$(TEST_TARGET)  --gtest_filter=${@:test-%=%}*
 	@echo -e ${MSG_B}DONE.${MSG_E}
 
-testtmp: $(RUN_TMP_ENTRY_EXEC_FILE) clean_test
+testtmp: $(RUN_TMP_ENTRY_EXEC_FILE) clean_test copy_resources
 	@echo -e ${MSG_B}Exec Temp Test.${MSG_E}
 	$(RUN_TMP_ENTRY_EXEC_FILE)
 	@echo -e ${MSG_B}DONE.${MSG_E}
@@ -184,7 +184,7 @@ testtmp: $(RUN_TMP_ENTRY_EXEC_FILE) clean_test
 .PHONY: clean_test
 clean_test:
 	@echo -e ${MSG_B}Clear Debug Objects like BMP,TXT,BIN, etc..${MSG_E}
-	-rm -f ./debug/*.bmp ./debug/*.txt ./debug/*.bin
+	-rm -f ./debug/*.bmp ./debug/*.txt ./debug/*.bin ./debug/resources
 	@echo -e ${MSG_B}DONE.${MSG_E}
 
 
@@ -198,6 +198,12 @@ clean_objects:
 .PHONY: clean
 clean: clean_publish clean_test clean_objects
 	@echo -e ${MSG_B}Clear All Test Files, Objects Files, Temp Files, DONE.${MSG_E}
+
+.PHONY: copy_resources
+copy_resources:
+	@echo -e ${MSG_B}Copy Resources to Debug Directory BEGIN.${MSG_E}
+	cp -f -r ./resources ./debug/
+	@echo -e ${MSG_B}DONE.${MSG_E}
 
 -include $(DEPENDS)
 -include $(TEST_DEPENDS)
