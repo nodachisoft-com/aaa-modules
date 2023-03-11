@@ -82,6 +82,9 @@ namespace a3c
     /// @brief Biome 領域ごとのユニークな ID を識別し、領域などの特性を記録する
     void generateStrategyMapBiomeId();
 
+    /// @brief BiomeLabel を生成する
+    std::string generateBiomeLabel(const Biome biome);
+
   public:
     // ============= アクセサメソッド ===============
 

@@ -22,7 +22,7 @@ bool DBs::init()
   {
     // LABELS_GEO データ読み込み
     std::string path(dbdataPath + "labels_geo.csv");
-    nl::FileAccessor fa(path);
+    FileAccessor fa(path);
     if (fa.readFileSync() == false)
     {
       Logger logger;

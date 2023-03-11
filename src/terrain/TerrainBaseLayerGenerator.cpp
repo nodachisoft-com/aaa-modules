@@ -336,3 +336,8 @@ void TerrainBaseLayerGenerator::init(TerrainBaseConfig _conf)
   layer4.init(_conf.Seed + 103);
   edgeFileter.init(_conf.mapEdgeWide / _conf.WorldScale);
 }
+
+std::string TerrainBaseLayerGenerator::generateBiomeLabel(const Biome biome)
+{
+  // TODO: GENERATE
+}
