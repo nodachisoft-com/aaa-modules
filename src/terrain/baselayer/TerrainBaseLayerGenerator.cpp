@@ -113,20 +113,6 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
       180.0f,
       999.0f};
 
-  // Biome 定義
-  int BIOME_DEEPSEA = 0;  // 深海
-  int BIOME_SEA = 1;      // 浅瀬
-  int BIOME_SEASHORE = 2; // 海岸の砂浜
-  int BIOME_MEADOW = 3;   // 草原 ( voronoi type = 0 )
-  // int BIOME_FOREST = 4;    // 森 ( voronoi type = 1 )
-  // int BIOME_DESERT = 5;    // 砂漠 ( voronoi type = 2 )
-  // int BIOME_WASTELAND = 6; // 荒地 ( voronoi type = 3 )
-  // int BIOME_POISONED = 7;  // 化学汚染 ( voronoi type = 4 )
-  int BIOME_MOUNTAIN = 8;      // 山岳
-  int BIOME_SNOW = 9;          // 雪
-  int BIOME_MOUNTAINSNOW = 10; // 山の雪
-  // TODO: 雪山の BIOME を作成し、平原の 雪とは区別すべし
-
   strategyMapBiomType.init(resSize.x, resSize.y, 0);
   for (int v = 0; v < height; v++)
   {
@@ -143,34 +129,34 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
       // HF の高さにより、選択可能な Biome を分別する
       if (height < stratumLv[STRATUM_DEEPSEA])
       {
-        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_DEEPSEA);
+        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, Biome::BIOME_DEEPSEA);
       }
       else if (height < stratumLv[STRATUM_SEA])
       {
-        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_SEA);
+        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, Biome::BIOME_SEA);
       }
       // 陸上の Biome
       else if (height < stratumLv[STRATUM_SEASHORE])
       {
         if (highLatitudeSnow) // 北極南極の近く
         {
-          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_SNOW);
+          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, Biome::BIOME_SNOW);
         }
         else
         {
-          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_SEASHORE);
+          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, Biome::BIOME_SEASHORE);
         }
       }
       else if (height < stratumLv[STRATUM_PLAIN])
       {
         if (highLatitudeSnow) // 北極南極の近く
         {
-          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_SNOW);
+          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, Biome::BIOME_SNOW);
         }
         else
         {
           // 平地で様々な Biome が発生する
-          int biomeType = b + BIOME_MEADOW;
+          int biomeType = b + Biome::BIOME_MEADOW;
           strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, biomeType);
         }
       }
@@ -178,17 +164,17 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomType()
       {
         if (highLatitudeSnow) // 北極南極に近く、雪山バイオーム
         {
-          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_MOUNTAINSNOW);
+          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, Biome::BIOME_MOUNTAINSNOW);
         }
         else
         {
           // 山岳バイオーム
-          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_MOUNTAIN);
+          strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, Biome::BIOME_MOUNTAIN);
         }
       }
       else if (height < stratumLv[STRATUM_SNOWMOUNTAIN])
       {
-        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, BIOME_MOUNTAINSNOW);
+        strategyMapBiomType.setWithIgnoreOutOfRangeData(u, v, Biome::BIOME_MOUNTAINSNOW);
       }
     }
   }
@@ -331,12 +317,10 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomeId()
 
 void TerrainBaseLayerGenerator::init(TerrainBaseConfig _conf, DBs &_dbRef)
 {
-  std::cout << "init_001" << std::endl;
   conf = _conf;
   dbRef = &_dbRef;
 
   int biomeDivisionCount = _conf.BiomeDivisionSmallestCount * _conf.WorldScale;
-  //  biom.init(_conf.Seed, _conf.NaturalBiomeTypes, biomeDivisionCount, biomeDivisionCount);
   biom.init(_conf.Seed, _conf.NaturalBiomeTypes, biomeDivisionCount, biomeDivisionCount);
   layer1.init(_conf.Seed);
   layer2.init(_conf.Seed + 66);
@@ -344,6 +328,4 @@ void TerrainBaseLayerGenerator::init(TerrainBaseConfig _conf, DBs &_dbRef)
   layer4.init(_conf.Seed + 103);
   edgeFileter.init(_conf.mapEdgeWide / _conf.WorldScale);
   terrainGeoLabelGenerator.init(_conf.Seed, _dbRef);
-  std::cout
-      << "init_002" << std::endl;
 }

@@ -23,25 +23,9 @@ namespace a3c
     DBs *dbRef;
 
     // === 植生 (BIOME) ラベル ===
-    /// @brief Biome_Meadow_ で始まる ID ラベル一覧
-    std::vector<LabelsGeoEntity> BiomeMeadowLabelList;
-    const std::string BIOME_MEADOW_LABEL_STARTWITH = "Biome_Meadow_";
-
-    /// @brief Biome_Desert_ で始まる ID ラベル一覧
-    std::vector<LabelsGeoEntity> BiomeDesertLabelList;
-    const std::string BIOME_DESERT_LABEL_STARTWITH = "Biome_Desert_";
-
-    /// @brief Biome_Forest_ で始まる ID ラベル一覧
-    std::vector<LabelsGeoEntity> BiomeForestLabelList;
-    const std::string BIOME_FOREST_LABEL_STARTWITH = "Biome_Forest_";
-
-    /// @brief Biome_Mountain_ で始まる ID ラベル一覧
-    std::vector<LabelsGeoEntity> BiomeMountainLabelList;
-    const std::string BIOME_MOUNTAIN_LABEL_STARTWITH = "Biome_Mountain_";
-
-    /// @brief Biome_Poison_ で始まる ID ラベル一覧
-    std::vector<LabelsGeoEntity> BiomePoisonLabelList;
-    const std::string BIOME_POISON_LABEL_STARTWITH = "Biome_Poison_";
+    /// @brief Biome_Deepsea_ で始まる ID ラベル一覧
+    std::vector<LabelsGeoEntity> BiomeDeepseaLabelList;
+    const std::string BIOME_DEEPSEA_LABEL_STARTWITH = "Biome_Deepsea_";
 
     /// @brief Biome_Sea_ で始まる ID ラベル一覧
     std::vector<LabelsGeoEntity> BiomeSeaLabelList;
@@ -51,9 +35,37 @@ namespace a3c
     std::vector<LabelsGeoEntity> BiomeSeashoreLabelList;
     const std::string BIOME_SEASHORE_LABEL_STARTWITH = "Biome_Seashore_";
 
+    /// @brief Biome_Meadow_ で始まる ID ラベル一覧
+    std::vector<LabelsGeoEntity> BiomeMeadowLabelList;
+    const std::string BIOME_MEADOW_LABEL_STARTWITH = "Biome_Meadow_";
+
+    /// @brief Biome_Forest_ で始まる ID ラベル一覧
+    std::vector<LabelsGeoEntity> BiomeForestLabelList;
+    const std::string BIOME_FOREST_LABEL_STARTWITH = "Biome_Forest_";
+
+    /// @brief Biome_Desert_ で始まる ID ラベル一覧
+    std::vector<LabelsGeoEntity> BiomeDesertLabelList;
+    const std::string BIOME_DESERT_LABEL_STARTWITH = "Biome_Desert_";
+
+    /// @brief Biome_Wasteland_ で始まる ID ラベル一覧
+    std::vector<LabelsGeoEntity> BiomeWastelandLabelList;
+    const std::string BIOME_WASTELAND_LABEL_STARTWITH = "Biome_Wasteland_";
+
+    /// @brief Biome_Poison_ で始まる ID ラベル一覧
+    std::vector<LabelsGeoEntity> BiomePoisonLabelList;
+    const std::string BIOME_POISON_LABEL_STARTWITH = "Biome_Poison_";
+
+    /// @brief Biome_Mountain_ で始まる ID ラベル一覧
+    std::vector<LabelsGeoEntity> BiomeMountainLabelList;
+    const std::string BIOME_MOUNTAIN_LABEL_STARTWITH = "Biome_Mountain_";
+
     /// @brief Biome_Snow_ で始まる ID ラベル一覧
     std::vector<LabelsGeoEntity> BiomeSnowLabelList;
     const std::string BIOME_SNOW_LABEL_STARTWITH = "Biome_Snow_";
+
+    /// @brief Biome_Mountainsnow_ で始まる ID ラベル一覧
+    std::vector<LabelsGeoEntity> BiomeMountainsnowLabelList;
+    const std::string BIOME_MOUNTAINSNOW_LABEL_STARTWITH = "Biome_Mountainsnow_";
 
     // === 大きさ (SCALE) ラベル ===
 

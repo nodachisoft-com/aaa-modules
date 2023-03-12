@@ -11,10 +11,7 @@ TEST(DBs, initialize_case001)
 {
   DBs DBs;
   DBs.init();
-
-  std::cout << DBs.TABLE_LABELS_GEO.size() << std::endl;
-
-  EXPECT_GT(DBs.TABLE_LABELS_GEO.size(), 1);
+  EXPECT_GT(DBs.TABLE_LABELS_GEO.size(), 1000);
 
   // 計算結果確認
   // EXPECT_EQ(0xed82cd11, result);

@@ -15,7 +15,7 @@ TEST(TerrainBaseLayerGenerator, getStrategyMapHF_case001)
   conf.NaturalBiomeTypes = 4;
   conf.BiomeDivisionSmallestCount = 3;
   conf.WorldSmallestMapunitSize = Size2d(256, 256);
-  conf.WorldScale = 8;
+  conf.WorldScale = 4;
   conf.mapEdgeWide = 0.4f;
 
   DBs DBs; // 読み込み専用 DB の宣言・初期化
@@ -35,7 +35,7 @@ TEST(TerrainBaseLayerGenerator, getStrategyMapHF_case001)
   // BIOME のデバッグ画像出力
   Memory2d<short> *biomeType = terrainGenerator.getStrategyMapBiomType();
   TestUtil::drawBiomeNoColorful(
-      biomeType, TESTTMP_DIR + "getStrategyMapHF_001_BiomeType.bmp", refBiomeList, 100);
+      biomeType, TESTTMP_DIR + "getStrategyMapHF_001_BiomeType.bmp", refBiomeList, 500);
 
   // 計算結果確認
   // EXPECT_EQ(0xed82cd11, result);

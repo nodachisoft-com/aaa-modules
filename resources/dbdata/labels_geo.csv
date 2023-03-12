@@ -1,34 +1,7 @@
 LabelOfGeographic
 # SearchKey,EN,JP
-Biome_Meadow_0,Glassland,草原
-Biome_Meadow_1,Meadow,草地
-Biome_Meadow_2,Savannah,サバンナ
-Biome_Meadow_3,Steppe,ステップ
-Biome_Meadow_4,Shrubland,低木地
-Biome_Desert_0,Desert,砂漠
-Biome_Desert_1,Desert,デザート
-Biome_Desert_2,Sand Dunes,砂丘
-Biome_Forest_0,Forest,森
-Biome_Forest_1,Forest,森林
-Biome_Forest_2,Forest,フォレスト
-Biome_Forest_3,Sea Of Trees,樹海
-Biome_Mountain_0,Mountain,山
-Biome_Mountain_1,Mountain Range,山脈
-Biome_Mountain_2,High Mountains,高山
-Biome_Mountain_3,Active Volcanoes,活火山
-Biome_Mountain_4,Volcanoes,火山
-Biome_Mountain_5,Hill,丘
-Biome_Mountain_6,Highlands,高地
-Biome_Mountain_7,Mountain,マウンテン
-Biome_Mountain_8,Mines,鉱山
-Biome_Poison_0,Pollution Zone,汚染地帯
-Biome_Poison_1,Chemical Contamination Zone,化学汚染地帯
-Biome_Poison_2,Biological Pollution Sites,生物汚染跡地
-Biome_Poison_3,Toxic Swamp,毒沼
-Biome_Poison_4,Toxic Waste Site,毒物廃棄跡地
-Biome_Poison_5,No Trespassing Zone,立ち入り禁止区
-Biome_Poison_6,Poison,ポイズン
-Biome_Poison_7,Site of Ancient Weapons Destruction,古代兵器破棄跡地
+Biome_Deepsea_0,Ocean,海洋
+Biome_Deepsea_1,Ocean,大洋
 Biome_Sea_0,Inland Sea,内海
 Biome_Sea_1,Freshwater Lakes,淡水湖
 Biome_Sea_2,Salt Sea,塩海
@@ -44,9 +17,43 @@ Biome_Seashore_3,Coastline,海岸線
 Biome_Seashore_4,Lagoon,ラグーン
 Biome_Seashore_5,Sandbar,砂州
 Biome_Seashore_6,Coastal Plain,海岸平野
-Biome_Snow_0,snow field,雪原
-Biome_Snow_1,Glaciers,氷河
-Biome_Snow_2,Fjords,フィヨルド
+Biome_Meadow_0,Glassland,草原
+Biome_Meadow_1,Meadow,草地
+Biome_Meadow_2,Savannah,サバンナ
+Biome_Meadow_3,Steppe,ステップ
+Biome_Meadow_4,Shrubland,低木地
+Biome_Forest_0,Forest,森
+Biome_Forest_1,Forest,森林
+Biome_Forest_2,Forest,フォレスト
+Biome_Forest_3,Sea Of Trees,樹海
+Biome_Desert_0,Desert,砂漠
+Biome_Desert_1,Desert,デザート
+Biome_Desert_2,Sand Dunes,砂丘
+Biome_Wasteland_0,Waste Land,荒地
+Biome_Wasteland_1,Ruin Land,死に地
+Biome_Poison_0,Pollution Zone,汚染地帯
+Biome_Poison_1,Chemical Contamination Zone,化学汚染地帯
+Biome_Poison_2,Biological Pollution Sites,生物汚染跡地
+Biome_Poison_3,Toxic Swamp,毒沼
+Biome_Poison_4,Toxic Waste Site,毒物廃棄跡地
+Biome_Poison_5,No Trespassing Zone,立ち入り禁止区
+Biome_Poison_6,Poison,ポイズン
+Biome_Poison_7,Site of Ancient Weapons Destruction,古代兵器破棄跡地
+Biome_Mountain_0,Mountain,山
+Biome_Mountain_1,Mountain Range,山脈
+Biome_Mountain_2,High Mountains,高山
+Biome_Mountain_3,Active Volcanoes,活火山
+Biome_Mountain_4,Volcanoes,火山
+Biome_Mountain_5,Hill,丘
+Biome_Mountain_6,Highlands,高地
+Biome_Mountain_7,Mountain,マウンテン
+Biome_Mountain_8,Mines,鉱山
+Biome_Snow_0,Snow field,雪原
+Biome_Snow_1,Snow field,凍土
+Biome_Snow_2,Glaciers,氷河
+Biome_Snow_3,Fjords,フィヨルド
+Biome_Mountainsnow_0,Snow Mountain,雪山
+Biome_Mountainsnow_1,Ice Mountain,氷山
 Scale_Small_0,Little,小
 Scale_Small_1,Small,スモール
 Scale_Small_2,Tiny,小さな
