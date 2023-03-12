@@ -27,12 +27,6 @@ TEST(TerrainBaseLayerGenerator, getStrategyMapHF_case001)
 
   // BiomeList の内容を取得
   std::vector<Biome> *refBiomeList = terrainGenerator.getBiomeList();
-  /*
-for (int i = 0; i < refBiomeList->size(); i++)
-{
-  Biome elem = refBiomeList->at(i);
-  std::cout << "BiomeID[" << elem.biomeNo << "] Biome Type=" << elem.biomeKind << ", Biome Area=" << elem.biomeAreaSize << std::endl;
-}*/
 
   // HF のデバッグ画像出力
   Memory2d<float> *hf = terrainGenerator.getStrategyMapHF();
@@ -41,7 +35,8 @@ for (int i = 0; i < refBiomeList->size(); i++)
   // BIOME のデバッグ画像出力
   Memory2d<short> *biomeType = terrainGenerator.getStrategyMapBiomType();
   TestUtil::drawBiomeNoColorful(
-      biomeType, TESTTMP_DIR + "getStrategyMapHF_001_BiomeType.bmp", refBiomeList);
+      biomeType, TESTTMP_DIR + "getStrategyMapHF_001_BiomeType.bmp", refBiomeList, 100);
+
   // 計算結果確認
   // EXPECT_EQ(0xed82cd11, result);
   // EXPECT_EQ(0xed82cd11, crc.getHash());
