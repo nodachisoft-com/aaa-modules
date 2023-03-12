@@ -8,10 +8,13 @@ TerrainEngine::TerrainEngine()
   _initialized = false;
 }
 
-void TerrainEngine::init(const TerrainConfig terrainConfig)
+void TerrainEngine::init(const TerrainConfig _terrainConfig, DBs &_dbRef)
 {
+  terrainConfig = _terrainConfig;
+  dbRef = &_dbRef;
+
   // TerrainBaseLayerGenerator を初期化する
-  baseLayerGen.init(terrainConfig.terrainBaseConfig);
+  baseLayerGen.init(terrainConfig.terrainBaseConfig, _dbRef);
   _initialized = true; // 初期化済みフラグをたてる
 }
 

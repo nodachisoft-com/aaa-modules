@@ -2,6 +2,7 @@
 
 using namespace nl;
 using namespace a3c;
+using namespace std::string_literals;
 
 DBs::DBs()
 {
@@ -11,10 +12,10 @@ DBs::DBs()
 
 bool DBs::init()
 {
+  Logger logger;
   if (initialized)
   {
     // 初期化済み
-    Logger logger;
     logger.infoLog("DBs::init() already initialized.");
     return false;
   }
@@ -25,13 +26,13 @@ bool DBs::init()
     FileAccessor fa(path);
     if (fa.readFileSync() == false)
     {
-      Logger logger;
       logger.errorLog("DBs::init() Could'nt read labels_geo.csv");
     }
     std::string csvData = fa.getMemoryBank()->readStringToEnd();
     CSVReader csvReader(',', '\\');
     csvReader.readCsv(csvData);
-    TABLE_LABELS_GEO.readCSV(csvReader);
+    int count = TABLE_LABELS_GEO.readCSV(csvReader);
+    logger.infoLog("DBs::init():TABLE_LABELS_GEO csv to DB loaded. count="s + std::to_string(count) + "."s);
   }
   return true;
 }

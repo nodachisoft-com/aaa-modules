@@ -18,8 +18,11 @@ TEST(TerrainBaseLayerGenerator, getStrategyMapHF_case001)
   conf.WorldScale = 8;
   conf.mapEdgeWide = 0.4f;
 
+  DBs DBs; // 読み込み専用 DB の宣言・初期化
+  DBs.init();
+
   TerrainBaseLayerGenerator terrainGenerator;
-  terrainGenerator.init(conf);
+  terrainGenerator.init(conf, DBs);
   terrainGenerator.generateBaseTerrain();
 
   // BiomeList の内容を取得

@@ -8,6 +8,10 @@ namespace a3c
 {
   class TerrainEngine
   {
+    TerrainConfig terrainConfig;
+
+    DBs *dbRef;
+
     /// @brief BaseLayer 生成用エンジン
     TerrainBaseLayerGenerator baseLayerGen;
 
@@ -22,7 +26,7 @@ namespace a3c
     ///   インスタンスに設定ファイルを渡し、メンバの各種 Generator に
     ///   必要な Config を渡す
     /// @param terrainConfig 地形生成用の Config
-    void init(const TerrainConfig terrainConfig);
+    void init(const TerrainConfig terrainConfig, DBs &dbRef);
 
     /// @brief 新しく BaseLayer を生成する
     void generateNewBaseLayer();

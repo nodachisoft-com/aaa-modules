@@ -7,12 +7,13 @@ MapEngine::MapEngine()
   initialized = false;
 };
 
-void MapEngine::init(const MapConfig _mapConfig)
+void MapEngine::init(const MapConfig _mapConfig, DBs &_dbRef)
 {
+  dbRef = &_dbRef;
   mapConfig = _mapConfig;
 }
 
 void MapEngine::generateNewWorld()
 {
-  terrainEngine.init(mapConfig.terrainConfig);
+  terrainEngine.init(mapConfig.terrainConfig, *dbRef);
 }

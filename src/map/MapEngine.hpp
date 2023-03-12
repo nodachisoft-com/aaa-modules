@@ -16,6 +16,9 @@ namespace a3c
     /// @brief 初期化済みフラグ
     bool initialized;
 
+    /// @brief DB参照
+    DBs *dbRef;
+
     /// @brief 地形生成エンジン
     TerrainEngine terrainEngine;
 
@@ -25,7 +28,7 @@ namespace a3c
   public:
     MapEngine();
 
-    void init(const MapConfig mapConfig);
+    void init(const MapConfig mapConfig, DBs &dbRef);
 
     void generateNewWorld();
 

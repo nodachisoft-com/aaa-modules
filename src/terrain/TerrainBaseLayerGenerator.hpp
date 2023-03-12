@@ -1,8 +1,11 @@
 #pragma once
 #include <iostream>
 #include <ndclibs.hpp>
+#include <string>
 #include "TerrainBaseConfig.hpp"
 #include "Biome.hpp"
+#include "../DBTables/DBs.hpp"
+#include "TerrainGeoLabelGenerator.hpp"
 
 using namespace nl;
 
@@ -12,6 +15,12 @@ namespace a3c
   {
   private:
     TerrainBaseConfig conf;
+
+    /// @brief データベースへの参照
+    DBs *dbRef;
+
+    /// @brief 地理ラベル生成モジュール
+    TerrainGeoLabelGenerator terrainGeoLabelGenerator;
 
     /// @brief Biome
     NdcNoisedEdgeVoronoi biom;
@@ -51,7 +60,7 @@ namespace a3c
     ///  マップ生成に必要な情報を config 形式で設定する。
     ///  マップ生成には generateBaseTerrain を別途呼び出しする必要がある
     /// @param conf マップ生成に必要な情報
-    void init(TerrainBaseConfig conf);
+    void init(TerrainBaseConfig conf, DBs &dbRef);
 
     // 基本的な HeightField、Biome 情報を生成する
     void generateBaseTerrain();
@@ -81,9 +90,6 @@ namespace a3c
 
     /// @brief Biome 領域ごとのユニークな ID を識別し、領域などの特性を記録する
     void generateStrategyMapBiomeId();
-
-    /// @brief BiomeLabel を生成する
-    std::string generateBiomeLabel(const Biome biome);
 
   public:
     // ============= アクセサメソッド ===============

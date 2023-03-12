@@ -2,9 +2,11 @@
 
 using namespace a3c;
 using namespace nl;
+using namespace std::string_literals;
 
-TerrainBaseLayerGenerator::TerrainBaseLayerGenerator() : biomeList{}
+TerrainBaseLayerGenerator::TerrainBaseLayerGenerator()
 {
+  biomeList = std::vector<Biome>();
 }
 
 TerrainBaseLayerGenerator::~TerrainBaseLayerGenerator()
@@ -203,6 +205,9 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomeId()
   int width = resSize.x;
   int height = resSize.y;
 
+  // RandomSeed
+  MtRandomizer rnd(conf.Seed);
+
   // MapBiom のユニークな ID を採番していく。
   // 一定以上のエリア（塗りつぶし面積）
   short biomeIdCount = 1;
@@ -314,7 +319,8 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomeId()
         biome.biomeKind = targetBiomeNo;
         biome.biomeAreaSize = drawCount;
         biome.centerPos = nl::Point2d(sumX / (float)drawCount, sumY / (float)drawCount);
-        biome.labelName = "Test";
+        biome.labelName = terrainGeoLabelGenerator.generateLabel(biome);
+
         biomeList.push_back(biome);
       }
 
@@ -323,9 +329,11 @@ void TerrainBaseLayerGenerator::generateStrategyMapBiomeId()
   }
 }
 
-void TerrainBaseLayerGenerator::init(TerrainBaseConfig _conf)
+void TerrainBaseLayerGenerator::init(TerrainBaseConfig _conf, DBs &_dbRef)
 {
+  std::cout << "init_001" << std::endl;
   conf = _conf;
+  dbRef = &_dbRef;
 
   int biomeDivisionCount = _conf.BiomeDivisionSmallestCount * _conf.WorldScale;
   //  biom.init(_conf.Seed, _conf.NaturalBiomeTypes, biomeDivisionCount, biomeDivisionCount);
@@ -335,9 +343,7 @@ void TerrainBaseLayerGenerator::init(TerrainBaseConfig _conf)
   layer3.init(_conf.Seed + 100);
   layer4.init(_conf.Seed + 103);
   edgeFileter.init(_conf.mapEdgeWide / _conf.WorldScale);
-}
-
-std::string TerrainBaseLayerGenerator::generateBiomeLabel(const Biome biome)
-{
-  // TODO: GENERATE
+  terrainGeoLabelGenerator.init(_conf.Seed, _dbRef);
+  std::cout
+      << "init_002" << std::endl;
 }
