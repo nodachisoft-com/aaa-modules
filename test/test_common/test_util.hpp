@@ -80,7 +80,7 @@ namespace TestUtil
   /// @param filepath 画像出力先のパス
   /// @return 生成した画像データの CRC32 を返す
   static unsigned long drawBiomeNoColorful(
-      Memory2d<short> *biomeType, const std::string filepath, std::vector<Biome> *refBiomeList)
+      Memory2d<short> *biomeType, const std::string filepath, std::vector<Biome> *refBiomeList, int biomeLabelSizeLargerThan)
   {
     std::vector<ColorRGB> colorList = {
         {0, 0, 142},     // 青 : 深海 : 0
@@ -119,9 +119,11 @@ namespace TestUtil
     for (int i = 0; i < biomeSize; i++)
     {
       Biome biome = refBiomeList->at(i);
-      image.writeText(biome.centerPos.x, biome.centerPos.y, biome.labelName, COLOR_RED);
+      if (biome.biomeAreaSize > biomeLabelSizeLargerThan)
+      {
+        image.writeText(biome.centerPos.x, biome.centerPos.y, biome.labelName, COLOR_RED);
+      }
     }
-
     image.WriteBmp(filepath);
     return crc.getHash();
   }

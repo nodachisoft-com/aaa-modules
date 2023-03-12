@@ -2,7 +2,7 @@
 #include <iostream>
 #include <ndclibs.hpp>
 #include "TerrainConfig.hpp"
-#include "TerrainBaseLayerGenerator.hpp"
+#include "baselayer/TerrainBaseLayerGenerator.hpp"
 
 namespace a3c
 {

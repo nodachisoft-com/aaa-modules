@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <ndclibs.hpp>
-#include "TerrainBaseConfig.hpp"
+#include "baselayer/TerrainBaseConfig.hpp"
 
 using namespace nl;
 

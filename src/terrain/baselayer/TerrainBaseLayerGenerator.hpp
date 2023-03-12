@@ -3,8 +3,8 @@
 #include <ndclibs.hpp>
 #include <string>
 #include "TerrainBaseConfig.hpp"
-#include "Biome.hpp"
-#include "../DBTables/DBs.hpp"
+#include "../Biome.hpp"
+#include "../../DBTables/DBs.hpp"
 #include "TerrainGeoLabelGenerator.hpp"
 
 using namespace nl;
